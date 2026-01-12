@@ -13,7 +13,7 @@ const acordeonData = [
                 description: "Laboratorios de entrenamiento intensivos en áreas IT y digitales, de corta duración y alto impacto. Diseñados para adquirir de manera rápida las habilidades técnicas e interpersonales demandadas por el mercado hoy.",
                 modality: "Online o Presencial (Mar del Plata)",
                 dedication: "         ",
-                icon: "📊", 
+                icon: "📊",
             }
         ],
         whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Gestión%20de%20Proyectos",
@@ -29,7 +29,7 @@ const acordeonData = [
                 description: "Diseño de CV/Portfolio y optimización de LinkedIn.",
                 dedication: "1 a 2 encuentros.",
                 modality: "Online o Presencial (Mar del Plata)",
-                icon: "💼" 
+                icon: "💼"
             }
         ],
         whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Orientación%20Laboral",
@@ -45,7 +45,7 @@ const acordeonData = [
                 description: "Te ofrecerán beneficios para tu salud mental, emocional y física.",
                 dedication: "4 encuentros, frecuencia semanal.",
                 modality: "Online y Presencial (Mar del Plata)",
-                icon: "🧘‍♂️" 
+                icon: "🧘‍♂️"
             },
         ],
         whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Capacitación%20y%20Bienestar",
@@ -59,7 +59,7 @@ const acordeonData = [
             {
                 title: "Crear mi microformación",
                 description: "Si tenés un conocimiento valioso para compartir, ¡te invitamos a crear tu microformación!",
-                icon: "🚀" 
+                icon: "🚀"
             },
         ],
         whatsappMessage: "Hola%20UMI,%20me%20interesa%20sumarme%20a%20UMI%20Consultoría",
@@ -350,7 +350,7 @@ class NavigationManager {
     constructor() {
         this.header = document.querySelector("header");
         this.sections = document.querySelectorAll("section");
-        this.navLinks = document.querySelectorAll(".menu a");
+        this.navLinks = document.querySelectorAll(".menu a, .mobile-menu a");
         this.init();
     }
 
@@ -358,6 +358,7 @@ class NavigationManager {
         this.setupSmoothScroll();
         this.setupScrollUI();
         this.initializeScrollState();
+        this.setupMobileMenuLinks();
     }
 
     setupSmoothScroll() {
@@ -378,6 +379,7 @@ class NavigationManager {
             });
 
             this.updateActiveNavLink(targetId);
+            this.closeMobileMenu();
         });
     }
 
@@ -415,9 +417,33 @@ class NavigationManager {
             link.classList.toggle("active", isActive);
         });
     }
+
+    setupMobileMenuLinks() {
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                this.closeMobileMenu();
+            });
+        });
+    }
+
+    closeMobileMenu() {
+        const overlay = document.getElementById('mobile-overlay');
+        const menu = document.getElementById('mobile-menu');
+        if (overlay && menu) {
+            overlay.classList.remove('active');
+            menu.classList.remove('active');
+            document.body.style.overflow = '';
+
+            const menuToggle = document.getElementById('menu-toggle');
+            if (menuToggle) {
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+    }
 }
 
-// ===== CARRUSEL INFINITO MEJORADO =====
+// ===== CARRUSEL =====
 class InfiniteCarousel {
     constructor() {
         this.events = [
@@ -513,7 +539,7 @@ class InfiniteCarousel {
             const trackContent = trackEl.querySelector('.track-content');
 
             let itemsHTML = '';
-            for (let i = 0; i < 5; i++) { 
+            for (let i = 0; i < 5; i++) {
                 this.events.forEach(event => {
                     itemsHTML += this.createCarouselItem(event);
                 });
@@ -551,16 +577,6 @@ class InfiniteCarousel {
         await Promise.all(promises);
     }
 
-    bindEvents() {
-        document.querySelectorAll('.carousel-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                const img = item.querySelector('img');
-                if (img && img.src) {
-                    window.open(img.src, '_blank');
-                }
-            });
-        });
-    }
 
     escapeHTML(text) {
         const div = document.createElement('div');
@@ -569,8 +585,56 @@ class InfiniteCarousel {
     }
 }
 
+// ===== MENÚ MÓVIL =====
+class MobileMenuManager {
+    constructor() {
+        this.menuToggle = document.getElementById('menu-toggle');
+        this.mobileOverlay = document.getElementById('mobile-overlay');
+        this.mobileMenu = document.getElementById('mobile-menu');
+        this.init();
+    }
+
+    init() {
+        if (!this.menuToggle || !this.mobileMenu) return;
+
+        this.menuToggle.addEventListener('click', () => this.toggleMobileMenu());
+        this.mobileOverlay.addEventListener('click', () => this.closeMobileMenu());
+
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => this.closeMobileMenu());
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') this.closeMobileMenu();
+        });
+    }
+
+    toggleMobileMenu() {
+        if (this.mobileMenu.classList.contains('active')) {
+            this.closeMobileMenu();
+        } else {
+            this.openMobileMenu();
+        }
+    }
+
+    openMobileMenu() {
+        this.mobileOverlay.classList.add('active');
+        this.mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+    }
+
+    closeMobileMenu() {
+        this.mobileOverlay.classList.remove('active');
+        this.mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+        this.menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+}
+
 // ===== INICIALIZACIÓN =====
-let acordeonManager, navigationManager, carousel;
+let acordeonManager, navigationManager, carousel, mobileMenuManager;
 
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Inicializando UMI...');
@@ -578,6 +642,8 @@ document.addEventListener('DOMContentLoaded', function () {
     acordeonManager = new AcordeonManager();
 
     navigationManager = new NavigationManager();
+
+    mobileMenuManager = new MobileMenuManager();
 
     if (document.getElementById("carousel-container")) {
         carousel = new InfiniteCarousel();
@@ -588,6 +654,24 @@ document.addEventListener('DOMContentLoaded', function () {
             acordeonManager.refreshContentHeights();
         }
     });
+
+    function handleResize() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+
+        if (window.innerWidth > 992) {
+            mobileMenu.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+
+            const menuToggle = document.getElementById('menu-toggle');
+            if (menuToggle) {
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        }
+    }
+
+    window.addEventListener('resize', handleResize);
 });
 
 // ===== FUNCIONES GLOBALES =====
@@ -620,5 +704,17 @@ window.scrollToContact = function () {
         if (navigationManager) {
             navigationManager.updateActiveNavLink('#contact');
         }
+    }
+};
+
+window.openMobileMenu = function () {
+    if (mobileMenuManager) {
+        mobileMenuManager.openMobileMenu();
+    }
+};
+
+window.closeMobileMenu = function () {
+    if (mobileMenuManager) {
+        mobileMenuManager.closeMobileMenu();
     }
 };

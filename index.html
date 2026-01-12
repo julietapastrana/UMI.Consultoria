@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/variable.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -24,7 +25,13 @@
             <img src="img/umi_logo.jpg" alt="Logo UMI">
         </div>
 
-        <nav class="nav">
+        <!-- Botón menú hamburguesa -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Alternar menú">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Menú desktop -->
+        <nav class="nav hidden-mobile">
             <ul class="menu">
                 <li><a href="#services">Servicios</a></li>
                 <li><a href="#trayecto">Nuestro Trayecto</a></li>
@@ -32,6 +39,37 @@
                 <li><a href="#contact">Contacto</a></li>
             </ul>
         </nav>
+
+        <!-- Menú móvil overlay -->
+        <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+
+        <!-- Menú móvil contenido -->
+        <div class="mobile-menu-container" id="mobile-menu">
+            <nav class="mobile-menu">
+                <a href="#services" class="mobile-menu-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Servicios</span>
+                </a>
+                <a href="#trayecto" class="mobile-menu-item">
+                    <i class="fas fa-road"></i>
+                    <span>Nuestro Trayecto</span>
+                </a>
+                <a href="#about" class="mobile-menu-item active">
+                    <i class="fas fa-users"></i>
+                    <span>Nosotros</span>
+                </a>
+                <a href="#contact" class="mobile-menu-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contacto</span>
+                </a>
+            </nav>
+
+            <div class="mobile-menu-footer">
+                <p style="font-size: 0.9rem; color: var(--texto-medio); opacity: 0.8;">
+                    Talento en Acción • Fluyendo hacia el éxito
+                </p>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -85,7 +123,7 @@
             </div>
         </section>
 
-        <!-- SECCIÓN ACORDEÓNE -->
+        <!-- SECCIÓN ACORDEÓN -->
         <section class="acordeon-section">
             <div class="acordeon-container" id="acordeon-container">
 
@@ -117,8 +155,7 @@
                 <article class="team-member-card">
                     <div class="member-header">
                         <div class="img-wrapper">
-                            <img src="img/GabrielaMolignano.jpeg" alt= "Gabriela Molignano">
-                                onerror="this.src='https://via.placeholder.com/110x110/9ccc65/ffffff?text=G'">
+                            <img src="img/GabrielaMolignano.jpeg" alt="Gabriela Molignano">
                         </div>
                         <div class="member-title">
                             <h3>Gabriela Molignano</h3>
@@ -149,8 +186,7 @@
                 <article class="team-member-card">
                     <div class="member-header">
                         <div class="img-wrapper">
-                            <img src="img/KarinaRocha.jpg" alt="Karina Rocha"
-                                onerror="this.src='https://via.placeholder.com/110x110/9ccc65/ffffff?text=K'">
+                            <img src="img/KarinaRocha.jpg" alt="Karina Rocha">
                         </div>
                         <div class="member-title">
                             <h3>Karina Rocha</h3>
@@ -214,7 +250,7 @@
                     <img src="img/umi_logo.jpg" alt="UMI Consultoría">
                 </div>
                 <div class="footer-text">
-                    © 2023 UMI Consultoría. 
+                    © 2023 UMI Consultoría.
                     Fluyendo hacia el éxito.
                 </div>
             </div>
