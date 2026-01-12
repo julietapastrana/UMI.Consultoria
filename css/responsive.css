@@ -1913,3 +1913,35 @@
         color: #000 !important;
     }
 }
+
+
+/* ================= CORRECCIÓN HERO MOBILE ================= */
+@media (max-width: 991px) {
+    .hero {
+        background-attachment: scroll !important;
+    }
+    
+    .hero::before {
+        background: rgba(245, 245, 245, 0.15) !important;
+        backdrop-filter: blur(1px) !important;
+    }
+}
+
+.hero {
+    background-image: url("../img/fondo.jpg") !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+@media (max-width: 767px) {
+    .hero::before {
+        background: rgba(245, 245, 245, 0.1) !important;
+        backdrop-filter: none !important;
+    }
+    
+    .hero-content {
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(5px) !important;
+    }
+}
