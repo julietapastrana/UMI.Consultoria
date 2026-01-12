@@ -1,0 +1,8 @@
+﻿# Ignorar archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.log
+
+# No ignorar nada más (todos los archivos y carpetas del proyecto se incluirán)
