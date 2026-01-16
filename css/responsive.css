@@ -9,7 +9,7 @@
     --bp-wide: 1400px;
     --bp-ultra: 1920px;
 
-    --fs-scale-min: 0.75;
+    --fs-scale-min: 0.85;
     --fs-scale-max: 1.25;
 
     --spacing-unit: 0.25rem;
@@ -18,27 +18,27 @@
 /* ================= RESET Y AJUSTES BASE RESPONSIVOS ================= */
 @media (max-width: 1199px) {
     html {
-        font-size: 15px;
+        font-size: 16px;
     }
 }
 
 @media (max-width: 991px) {
     html {
-        font-size: 14.5px;
-        scroll-padding-top: 70px;
+        font-size: 15.5px;
+        scroll-padding-top: 75px;
     }
 }
 
 @media (max-width: 767px) {
     html {
-        font-size: 14px;
-        scroll-padding-top: 60px;
+        font-size: 15px;
+        scroll-padding-top: 70px;
     }
 }
 
 @media (max-width: 479px) {
     html {
-        font-size: 13.5px;
+        font-size: 14.5px;
     }
 }
 
@@ -263,45 +263,57 @@
 /* ================= HEADER RESPONSIVO ================= */
 @media (max-width: 1199px) {
     .header {
-        padding: 0.8rem 1.5rem;
+        padding: 0.9rem 1.5rem;
     }
 
     .header.scrolled {
-        padding: 0.6rem 1.5rem;
+        padding: 0.7rem 1.5rem;
         backdrop-filter: blur(15px);
     }
 
     .header .logo img {
-        height: 52px;
+        height: 54px;
         transition: height 0.3s ease;
     }
 
     .header.scrolled .logo img {
-        height: 46px;
-    }
-
-    .nav.hidden-mobile {
-        display: none;
-    }
-
-    .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        height: 48px;
     }
 }
 
 @media (max-width: 991px) {
     .header {
-        padding: 0.7rem 1.2rem;
+        padding: 0.8rem 1.2rem;
     }
 
     .header.scrolled {
-        padding: 0.5rem 1.2rem;
+        padding: 0.6rem 1.2rem;
     }
 
     .header .logo img {
-        height: 48px;
+        height: 50px;
+    }
+
+    .header.scrolled .logo img {
+        height: 44px;
+    }
+}
+
+@media (max-width: 767px) {
+    .header {
+        padding: 0.7rem 1rem;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .header.scrolled {
+        padding: 0.5rem 1rem;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .header .logo img {
+        height: 46px;
     }
 
     .header.scrolled .logo img {
@@ -309,42 +321,21 @@
     }
 }
 
-@media (max-width: 767px) {
-    .header {
-        padding: 0.6rem 1rem;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-    }
-
-    .header.scrolled {
-        padding: 0.4rem 1rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .header .logo img {
-        height: 44px;
-    }
-
-    .header.scrolled .logo img {
-        height: 40px;
-    }
-}
-
 @media (max-width: 479px) {
     .header {
-        padding: 0.5rem 0.8rem;
+        padding: 0.6rem 0.8rem;
     }
 
     .header.scrolled {
-        padding: 0.3rem 0.8rem;
+        padding: 0.4rem 0.8rem;
     }
 
     .header .logo img {
-        height: 40px;
+        height: 42px;
     }
 
     .header.scrolled .logo img {
-        height: 36px;
+        height: 38px;
     }
 
     .menu-toggle {
@@ -367,7 +358,7 @@
 
 @media (max-width: 1199px) {
     .hero {
-        min-height: 90vh;
+        min-height: 85vh;
     }
 
     .hero-content {
@@ -377,99 +368,108 @@
     }
 
     .hero-title h1 {
-        font-size: 2.5rem;
+        font-size: 2.4rem;
     }
 
     .hero-subtitle p {
         font-size: 1.15rem;
+        line-height: 1.6;
+    }
+
+    .cta-button {
+        padding: 0.9rem 1.8rem;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
     }
 }
 
 @media (max-width: 991px) {
     .hero {
-        min-height: 85vh;
-        padding: 2rem;
+        min-height: 75vh;
+        padding: 1.5rem;
     }
 
     .hero-content {
         max-width: 700px;
         padding: 2.5rem;
-        margin: 0 1.5rem;
+        width: 100%;
     }
 
     .hero-title h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
     }
 
     .hero-title h1::after {
-        width: 110px;
+        width: 100px;
         height: 10px;
-        margin: 0.8rem auto 0;
+        margin: 0.6rem auto 0;
     }
 
     .hero-subtitle p {
         font-size: 1.05rem;
-        line-height: 1.6;
-    }
-
-    .cta-button {
-        padding: 0.85rem 2rem;
-        font-size: 1.05rem;
-        margin-top: 1.5rem;
-    }
-}
-
-@media (max-width: 767px) {
-    .hero {
-        min-height: 80vh;
-        padding: 1.5rem;
-        background-position: center 30%;
-    }
-
-    .hero-content {
-        padding: 2rem;
-        margin: 0 1rem;
-        border-radius: 20px;
-    }
-
-    .hero-title h1 {
-        font-size: 1.9rem;
-        letter-spacing: 0.5px;
-    }
-
-    .hero-title h1::after {
-        width: 90px;
-        height: 8px;
-    }
-
-    .hero-subtitle p {
-        font-size: 1rem;
         line-height: 1.55;
         margin-bottom: 0.5rem;
     }
 
     .cta-button {
-        padding: 0.8rem 1.8rem;
+        padding: 0.85rem 1.7rem;
+        font-size: 1.05rem;
+        margin-top: 1.4rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero {
+        min-height: 70vh;
+        padding: 1rem;
+        background-position: center 30%;
+    }
+
+    .hero-content {
+        padding: 2rem;
+        border-radius: 20px;
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-title h1 {
+        font-size: 1.8rem;
+        letter-spacing: 0.3px;
+    }
+
+    .hero-title h1::after {
+        width: 85px;
+        height: 8px;
+    }
+
+    .hero-subtitle p {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 0.4rem;
+    }
+
+    .cta-button {
+        padding: 0.8rem 1.6rem;
         font-size: 1rem;
         border-radius: 12px;
+        margin-top: 1.2rem;
     }
 }
 
 @media (max-width: 599px) {
     .hero {
-        min-height: 75vh;
-        padding: 1rem;
+        min-height: 65vh;
+        padding: 0.8rem;
     }
 
     .hero-content {
         padding: 1.8rem;
-        margin: 0;
-        width: 95%;
     }
 
     .hero-title h1 {
-        font-size: 1.7rem;
-        margin-bottom: 0.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.5rem;
     }
 
     .hero-subtitle p {
@@ -478,16 +478,16 @@
     }
 
     .cta-button {
-        width: 100%;
-        max-width: 280px;
-        padding: 0.85rem;
-        font-size: 1rem;
+        width: auto;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+        max-width: 260px;
     }
 }
 
 @media (max-width: 479px) {
     .hero {
-        min-height: 70vh;
+        min-height: 60vh;
     }
 
     .hero-content {
@@ -495,7 +495,7 @@
     }
 
     .hero-title h1 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .hero-subtitle p {
@@ -503,434 +503,643 @@
     }
 
     .cta-button {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.95rem;
+        padding: 0.75rem 1.4rem;
+        font-size: 0.9rem;
+        max-width: 240px;
     }
 }
 
 @media (max-height: 600px) and (orientation: landscape) {
     .hero {
-        min-height: 110vh;
+        min-height: 90vh;
     }
 
     .hero-content {
         padding: 1.5rem;
-        max-width: 90%;
+        max-width: 95%;
     }
 
     .hero-title h1 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.4rem;
     }
 
     .hero-subtitle p {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
         line-height: 1.4;
     }
 }
 
 /* ================= SERVICIOS RESPONSIVO ================= */
-@media (max-width: 1399px) {
-    .services {
-        max-width: 1300px;
-        padding: 3.5rem 2.5rem;
-    }
-
-    .services-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2.5rem;
-    }
-}
-
 @media (max-width: 1199px) {
-    .services {
-        max-width: 95%;
-        padding: 3rem 2rem;
-        margin: 0 auto 4rem;
+    .service-cta {
+        padding: 0.8rem 1.7rem !important;
+        font-size: 0.92rem !important;
+        min-width: 170px !important;
+        border-radius: 11px !important;
+        background: rgba(197, 214, 62, 0.12) !important;
+        border: 2px solid rgba(197, 214, 62, 0.25) !important;
+        box-shadow: 0 3px 10px rgba(197, 214, 62, 0.1) !important;
+        margin-top: 0.8rem !important;
     }
-
-    .services h2 {
-        font-size: 2rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2.5rem;
-    }
-
-    .service-card {
-        min-height: 320px;
-    }
-}
-
-@media (max-width: 991px) {
-    .services {
-        padding: 2.5rem 1.8rem;
-        margin-bottom: 3.5rem;
-        border-radius: 24px;
-    }
-
-    .services h2 {
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
-    }
-
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
-
-    .service-card {
-        padding: 2.2rem 1.5rem 2.4rem;
-        min-height: 300px;
-    }
-
-    .service-icon {
-        width: 85px;
-        height: 85px;
-        margin-top: -70px;
-    }
-
-    .service-card h3 {
-        font-size: 1.3rem;
-        margin: 1.5rem 0 1rem;
-    }
-
-    .service-card p {
-        font-size: 1rem;
-        line-height: 1.6;
+    
+    .service-card:hover .service-cta {
+        background: rgba(197, 214, 62, 0.15) !important;
+        border-color: rgba(197, 214, 62, 0.35) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 5px 15px rgba(197, 214, 62, 0.15) !important;
     }
 }
 
 @media (max-width: 767px) {
-    .services {
-        padding: 2.2rem 1.5rem;
-        margin: 0 1rem 3rem;
-        border-radius: 20px;
-    }
-
-    .services h2 {
-        font-size: 1.6rem;
-        margin-bottom: 1.8rem;
-    }
-
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-        max-width: 450px;
-        margin: 0 auto;
-    }
-
     .service-card {
-        padding: 2rem 1.3rem 2.2rem;
-        min-height: 280px;
-        max-width: 400px;
-        margin: 0 auto;
+        padding: 2rem 1.2rem 1.6rem !important;
+        margin: 0 0.4rem !important;
+        min-height: 280px !important;
     }
-
-    .service-card:hover {
-        transform: translateY(-8px);
-    }
-
-    .service-icon {
-        width: 80px;
-        height: 80px;
-        margin-top: -65px;
-    }
-
-    .service-card h3 {
-        font-size: 1.25rem;
-        margin: 1.3rem 0 0.9rem;
-    }
-}
-
-@media (max-width: 599px) {
-    .services {
-        padding: 2rem 1.2rem;
-        margin: 0 0.8rem 2.5rem;
-    }
-
-    .services h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
+    
     .services-grid {
-        gap: 2.2rem;
+        max-width: 310px !important;
+        margin: 0 auto !important;
+        gap: 1.5rem !important;
     }
-
-    .service-card {
-        padding: 1.8rem 1.2rem 2rem;
-        min-height: 260px;
+    
+    .services {
+        padding: 1.8rem 0.7rem !important;
     }
-
-    .service-icon {
-        width: 75px;
-        height: 75px;
-        margin-top: -60px;
+    
+    .service-cta {
+        padding: 0.8rem 1.8rem !important;
+        font-size: 0.9rem !important;
+        min-width: 180px !important;
+        min-height: 40px !important;
+        margin-top: 0.6rem !important;
+        border-radius: 10px !important;
     }
-
-    .service-card h3 {
-        font-size: 1.2rem;
+    
+    .service-cta::after {
+        content: "→" !important;
+        font-weight: bold !important;
+        font-size: 1rem !important;
+        transition: transform 0.2s ease !important;
+        margin-left: 0.4rem !important;
     }
-
-    .service-card p {
-        font-size: 0.95rem;
+    
+    .service-card:hover .service-cta::after {
+        transform: translateX(3px) !important;
     }
 }
 
 @media (max-width: 479px) {
-    .services {
-        padding: 1.8rem 1rem;
-        margin: 0 0.5rem 2rem;
-        border-radius: 18px;
-    }
-
-    .services h2 {
-        font-size: 1.4rem;
-    }
-
     .service-card {
-        padding: 1.6rem 1rem 1.8rem;
-        min-height: 250px;
+        padding: 1.8rem 1rem 1.4rem !important;
+        margin: 0 0.3rem !important;
+        min-height: 260px !important;
     }
+    
+    .services {
+        padding: 1.6rem 0.5rem !important;
+    }
+    
+    .services-grid {
+        max-width: 270px !important;
+    }
+    
+    .service-cta {
+        padding: 0.7rem 1.5rem !important;
+        min-width: 160px !important;
+        font-size: 0.85rem !important;
+        margin-top: 0.5rem !important;
+    }
+}
 
+@media (min-width: 768px) and (max-width: 991px) {
+    .service-card {
+        padding: 2.2rem 1.6rem 1.8rem !important;
+        min-height: 300px !important;
+    }
+    
+    .services-grid {
+        max-width: 680px !important;
+        gap: 1.8rem !important;
+    }
+    
+    .service-cta {
+        padding: 0.85rem 1.8rem !important;
+        min-width: 180px !important;
+        font-size: 0.95rem !important;
+        margin-top: 0.8rem !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .service-cta span {
+        font-weight: 600 !important;
+        letter-spacing: 0.25px !important;
+    }
+    
+    .service-cta::after {
+        content: "→" !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+        transition: transform 0.2s ease !important;
+    }
+    
+    .service-card:hover .service-cta::after {
+        transform: translateX(3px) !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .service-icon-wrapper {
+        margin-top: -32px !important;
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
     .service-icon {
-        width: 70px;
-        height: 70px;
-        margin-top: -55px;
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
+    .service-card {
+        padding-top: 2.5rem !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .service-card h3 {
+        margin: 0.4rem 0 1rem 0 !important;
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.15px !important;
+        line-height: 1.25 !important;
+    }
+    
+    .service-card h3::after {
+        width: 45px !important;
+        height: 4px !important;
+        margin: 0.6rem auto 0 !important;
+        background: linear-gradient(90deg, var(--lima), var(--lima-claro)) !important;
+        border-radius: 2px !important;
+    }
+}
+
+@media (max-width: 479px) {
+    .service-card h3 {
+        margin: 0.4rem 0 0.9rem 0 !important;
+        font-size: 1.05rem !important;
+    }
+    
+    .service-card h3::after {
+        margin: 0.5rem auto 0 !important;
+        width: 40px !important;
+        height: 3px !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .service-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(249, 251, 245, 0.96) 100%) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(197, 214, 62, 0.15) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(255, 255, 255, 0.9) inset !important;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 10px 30px rgba(197, 214, 62, 0.1), 0 6px 20px rgba(0, 0, 0, 0.08) !important;
+        border-color: rgba(197, 214, 62, 0.25) !important;
     }
 }
 
 /* ================= ACORDEÓN RESPONSIVO ================= */
-@media (max-width: 1399px) {
-    .acordeon-section {
-        max-width: 1300px;
-        margin: 3rem auto;
-    }
-}
-
 @media (max-width: 1199px) {
-    .acordeon-section {
-        max-width: 95%;
-        padding: 2.5rem 1.5rem;
+    .acordeon-item {
+        border-radius: 16px;
+        background: white;
+        border: 2px solid #f0f0f0;
+        margin-bottom: 1rem;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
     }
-
-    .acordeon-container {
-        max-width: 100%;
+    
+    .acordeon-item.active {
+        border-color: var(--lima);
+        box-shadow: 0 5px 15px rgba(197, 214, 62, 0.1);
     }
-
+    
     .acordeon-header {
-        padding: 1.5rem 2rem;
+        padding: 1.2rem;
+        background: #fafafa;
+        border-bottom: 1px solid #f0f0f0;
+        position: relative;
     }
-
+    
+    .acordeon-item.active .acordeon-header {
+        background: rgba(197, 214, 62, 0.05);
+        border-bottom-color: rgba(197, 214, 62, 0.1);
+    }
+    
     .acordeon-header h3 {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--gris-oscuro);
+        padding-right: 3rem;
+        margin: 0;
+        line-height: 1.3;
     }
-}
-
-@media (max-width: 991px) {
-    .acordeon-section {
-        padding: 2rem 1.2rem;
-        margin: 2.5rem auto;
+    
+    .toggle-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: white;
+        border: 2px solid var(--lima);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-
-    .acordeon-header {
-        padding: 1.4rem 1.8rem;
-        min-height: 75px;
+    
+    .acordeon-item.active .toggle-icon {
+        background: var(--lima);
+        transform: translateY(-50%) rotate(180deg);
     }
-
-    .acordeon-header h3 {
-        font-size: 1.2rem;
+    
+    .toggle-icon i {
+        color: var(--lima);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .acordeon-item.active .toggle-icon i {
+        color: white;
+    }
+    
+    .content-wrapper {
+        padding: 1.2rem;
+        background: white;
+    }
+    
+    .acordeon-general-description {
+        padding: 0.8rem 0 1.2rem;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 1rem;
+    }
+    
+    .acordeon-general-description p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: var(--texto-medio);
+        margin: 0;
+    }
+    
+    .items-container {
+        padding: 0;
+    }
+    
+    .subtitulo-item {
+        background: #fafafa;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #f0f0f0;
+    }
+    
+    .subtitulo-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+    
+    .icon-line-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.8rem;
+    }
+    
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, rgba(197, 214, 62, 0.1), rgba(197, 214, 62, 0.05));
+        border: 2px solid rgba(197, 214, 62, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-right: 1rem;
+    }
+    
+    .emoji-icon {
+        font-size: 1.5rem;
+    }
+    
+    .horizontal-line {
+        display: none;
+    }
+    
+    .subtitulo-header h4 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem 0;
+        color: var(--gris-oscuro);
+    }
+    
+    .subtitulo-descripcion {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: var(--texto-medio);
+        margin: 0 0 0.8rem 0;
+    }
+    
+    .subtitulo-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 0.8rem;
+    }
+    
+    .detail-box {
+        background: white;
+        border-radius: 8px;
+        padding: 0.8rem;
+        border: 1px solid rgba(197, 214, 62, 0.15);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    
+    .detail-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--lima);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: block;
+        margin-bottom: 0.2rem;
+    }
+    
+    .detail-value {
+        font-size: 0.9rem;
+        color: var(--gris-oscuro);
         line-height: 1.4;
     }
-
-    .content-wrapper {
-        padding: 1.8rem 1.8rem 1.5rem;
+    
+    .whatsapp-button-container {
+        padding: 1.5rem 0 0;
+        text-align: center;
+        border-top: 1px solid #f0f0f0;
+        margin-top: 1rem;
     }
-
-    .subtitulo-item {
-        margin-bottom: 1.8rem;
-        padding-bottom: 1.8rem;
+    
+    .whatsapp-category-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.15), rgba(37, 211, 102, 0.1));
+        color: #075e54;
+        font-size: 1rem;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 12px;
+        border: 2px solid rgba(37, 211, 102, 0.25);
+        width: 100%;
+        max-width: 280px;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 10px rgba(37, 211, 102, 0.1);
     }
-
-    .icon-circle {
-        width: 70px;
-        height: 70px;
+    
+    .whatsapp-category-button:hover {
+        background: linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(37, 211, 102, 0.15));
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(37, 211, 102, 0.15);
     }
-
-    .emoji-icon {
-        font-size: 2.2rem;
+    
+    .whatsapp-category-button svg {
+        width: 20px;
+        height: 20px;
+        fill: #075e54;
     }
-
-    .subtitulo-header h4 {
-        font-size: 1.2rem;
+    
+    @media (min-width: 768px) {
+        .acordeon-header {
+            padding: 1.5rem;
+        }
+        
+        .acordeon-header h3 {
+            font-size: 1.2rem;
+        }
+        
+        .content-wrapper {
+            padding: 1.5rem;
+        }
+        
+        .subtitulo-item {
+            padding: 1.2rem;
+        }
+        
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .emoji-icon {
+            font-size: 1.8rem;
+        }
+        
+        .subtitulo-header h4 {
+            font-size: 1.15rem;
+        }
+        
+        .subtitulo-descripcion {
+            font-size: 0.95rem;
+        }
+        
+        .whatsapp-category-button {
+            padding: 1.1rem 2.2rem;
+            font-size: 1.05rem;
+            max-width: 300px;
+        }
     }
-
-    .subtitulo-details {
-        flex-wrap: wrap;
-        gap: 1rem;
+    
+    @media (max-width: 767px) {
+        .acordeon-section {
+            padding: 1rem 0.5rem;
+            margin: 1.5rem auto;
+        }
+        
+        .acordeon-header h3 {
+            font-size: 1.05rem;
+            padding-right: 2.5rem;
+        }
+        
+        .toggle-icon {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .content-wrapper {
+            padding: 1rem;
+        }
+        
+        .subtitulo-item {
+            padding: 0.9rem;
+        }
+        
+        .icon-circle {
+            width: 45px;
+            height: 45px;
+            margin-right: 0.8rem;
+        }
+        
+        .emoji-icon {
+            font-size: 1.3rem;
+        }
+        
+        .subtitulo-header h4 {
+            font-size: 1rem;
+        }
+        
+        .subtitulo-descripcion {
+            font-size: 0.88rem;
+        }
+        
+        .whatsapp-button-container {
+            padding: 1.2rem 0 0;
+        }
+        
+        .whatsapp-category-button {
+            padding: 0.9rem 1.5rem;
+            font-size: 0.95rem;
+            max-width: 260px;
+        }
     }
-
-    .detail-box {
-        flex: 1 1 calc(50% - 0.5rem);
-        min-width: 200px;
+    
+    @media (max-width: 479px) {
+        .acordeon-section {
+            padding: 0.8rem 0.3rem;
+            margin: 1rem auto;
+        }
+        
+        .acordeon-item {
+            margin-bottom: 0.8rem;
+        }
+        
+        .acordeon-header {
+            padding: 1rem;
+        }
+        
+        .acordeon-header h3 {
+            font-size: 0.98rem;
+            padding-right: 2.2rem;
+        }
+        
+        .toggle-icon {
+            width: 32px;
+            height: 32px;
+            right: 0.8rem;
+        }
+        
+        .toggle-icon i {
+            font-size: 0.9rem;
+        }
+        
+        .content-wrapper {
+            padding: 0.8rem;
+        }
+        
+        .acordeon-general-description {
+            padding: 0.6rem 0 0.8rem;
+        }
+        
+        .acordeon-general-description p {
+            font-size: 0.88rem;
+        }
+        
+        .subtitulo-item {
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            margin-right: 0.7rem;
+        }
+        
+        .emoji-icon {
+            font-size: 1.1rem;
+        }
+        
+        .subtitulo-header h4 {
+            font-size: 0.95rem;
+        }
+        
+        .subtitulo-descripcion {
+            font-size: 0.85rem;
+        }
+        
+        .detail-box {
+            padding: 0.7rem;
+        }
+        
+        .detail-label {
+            font-size: 0.7rem;
+        }
+        
+        .detail-value {
+            font-size: 0.85rem;
+        }
+        
+        .whatsapp-button-container {
+            padding: 1rem 0 0;
+        }
+        
+        .whatsapp-category-button {
+            padding: 0.8rem 1.2rem;
+            font-size: 0.9rem;
+            max-width: 240px;
+        }
     }
 }
 
-@media (max-width: 767px) {
+@media (min-width: 992px) and (max-width: 1199px) {
     .acordeon-section {
-        padding: 1.8rem 1rem;
-        margin: 2rem auto;
+        max-width: 95%;
+        padding: 2rem 1rem;
+        margin: 2.5rem auto;
     }
-
+    
     .acordeon-header {
-        padding: 1.2rem 1.5rem;
-        min-height: 70px;
+        padding: 1.5rem;
     }
-
+    
     .acordeon-header h3 {
-        font-size: 1.15rem;
+        font-size: 1.25rem;
     }
-
-    .toggle-icon {
-        width: 38px;
-        height: 38px;
-    }
-
-    .content-wrapper {
-        padding: 1.5rem 1.5rem 1.2rem;
-    }
-
-    .subtitulo-item {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
-    }
-
-    .icon-line-container {
-        flex-direction: row;
-        align-items: center;
-        margin-right: 0;
-        margin-bottom: 1.2rem;
-        width: 100%;
-    }
-
+    
     .icon-circle {
         width: 65px;
         height: 65px;
-        flex-shrink: 0;
     }
-
-    .horizontal-line {
-        flex-grow: 1;
-        margin-left: 1rem;
-        width: auto;
-        min-width: 40px;
-    }
-
-    .subtitulo-header h4 {
-        font-size: 1.15rem;
-    }
-
-    .subtitulo-descripcion {
-        font-size: 1rem;
-        max-width: 100%;
-    }
-
-    .detail-box {
-        flex: 1 1 100%;
-    }
-
-    .whatsapp-button-container {
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-    }
-
-    .whatsapp-category-button {
-        width: 100%;
-        max-width: 300px;
-    }
-}
-
-@media (max-width: 599px) {
-    .acordeon-header {
-        padding: 1.1rem 1.3rem;
-    }
-
-    .acordeon-header h3 {
-        font-size: 1.1rem;
-    }
-
-    .content-wrapper {
-        padding: 1.3rem 1.3rem 1rem;
-    }
-
-    .icon-circle {
-        width: 60px;
-        height: 60px;
-    }
-
+    
     .emoji-icon {
         font-size: 2rem;
     }
-
+    
     .subtitulo-header h4 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
-
+    
     .subtitulo-descripcion {
-        font-size: 0.95rem;
-    }
-
-    .detail-label {
-        font-size: 0.75rem;
-    }
-
-    .detail-value {
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 479px) {
-    .acordeon-section {
-        padding: 1.5rem 0.8rem;
-        margin: 1.5rem auto;
-    }
-
-    .acordeon-header {
-        padding: 1rem 1.2rem;
-        min-height: 65px;
-    }
-
-    .acordeon-header h3 {
-        font-size: 1.05rem;
-    }
-
-    .toggle-icon {
-        width: 36px;
-        height: 36px;
-    }
-
-    .icon-circle {
-        width: 55px;
-        height: 55px;
-    }
-
-    .emoji-icon {
-        font-size: 1.8rem;
-    }
-
-    .horizontal-line {
-        min-width: 35px;
-    }
-
-    .whatsapp-category-button {
-        padding: 0.9rem 1.5rem;
-        font-size: 0.95rem;
-        min-width: auto;
+        font-size: 1rem;
     }
 }
 
@@ -938,7 +1147,7 @@
 @media (max-width: 1399px) {
     .carousel-section {
         max-width: 1300px;
-        margin: 3rem auto;
+        margin: 4rem auto;
     }
 
     .carousel-item {
@@ -950,11 +1159,11 @@
 @media (max-width: 1199px) {
     .carousel-section {
         max-width: 95%;
-        padding: 3rem 0;
+        padding: 3.5rem 0;
     }
 
     .carousel-container h2 {
-        font-size: 2rem;
+        font-size: 2.2rem;
         margin-bottom: 2.5rem;
     }
 
@@ -970,13 +1179,13 @@
 
 @media (max-width: 991px) {
     .carousel-section {
-        padding: 2.5rem 0;
-        margin: 2.5rem auto;
+        padding: 3rem 0;
+        margin: 3rem auto;
     }
 
     .carousel-container h2 {
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
+        font-size: 2rem;
+        margin-bottom: 2.2rem;
     }
 
     .carousel-container {
@@ -989,7 +1198,7 @@
     }
 
     .item-overlay {
-        padding: 1.2rem;
+        padding: 1.5rem;
     }
 
     .item-overlay h3 {
@@ -997,7 +1206,7 @@
     }
 
     .item-overlay p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .track {
@@ -1007,17 +1216,17 @@
 
 @media (max-width: 767px) {
     .carousel-section {
-        padding: 2rem 0;
-        margin: 2rem auto;
+        padding: 2.5rem 0;
+        margin: 2.5rem auto;
     }
 
     .carousel-container h2 {
-        font-size: 1.6rem;
-        margin-bottom: 1.8rem;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
     }
 
     .carousel-container {
-        padding: 0 1rem 1.5rem;
+        padding: 0 1rem 1.8rem;
     }
 
     .carousel-container::before,
@@ -1031,11 +1240,11 @@
     }
 
     .item-overlay h3 {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
     }
 
     .item-overlay p {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
 
     .track {
@@ -1057,21 +1266,21 @@
 
 @media (max-width: 599px) {
     .carousel-section {
-        padding: 1.8rem 0;
+        padding: 2rem 0;
     }
 
     .carousel-container h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.7rem;
+        margin-bottom: 1.8rem;
     }
 
     .carousel-container {
-        padding: 0 0.8rem 1.2rem;
+        padding: 0 0.8rem 1.5rem;
     }
 
     .carousel-container::before,
     .carousel-container::after {
-        width: 40px;
+        width: 50px;
     }
 
     .carousel-item {
@@ -1080,12 +1289,12 @@
     }
 
     .item-overlay {
-        padding: 1rem;
+        padding: 1.2rem;
     }
 
     .item-overlay h3 {
-        font-size: 1rem;
-        margin-bottom: 0.4rem;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
     }
 
     .track {
@@ -1095,11 +1304,11 @@
 
 @media (max-width: 479px) {
     .carousel-section {
-        padding: 1.5rem 0;
+        padding: 1.8rem 0;
     }
 
     .carousel-container h2 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
 
     .carousel-item {
@@ -1128,27 +1337,90 @@
 @media (max-width: 1199px) {
     .about {
         max-width: 95%;
-        padding: 0 2rem;
+        padding: 0 2.5rem;
     }
 
     .team-presentation-row {
-        gap: 2.5rem;
+        gap: 2.8rem;
     }
 
     .team-member-card {
-        padding: 2.8rem 2.2rem;
+        padding: 3rem 2.5rem;
     }
 }
 
 @media (max-width: 991px) {
+    .about {
+        padding: 0 2rem;
+        margin-bottom: 5rem;
+    }
+
+    .about h2 {
+        font-size: 2.4rem;
+        margin-bottom: 2.2rem;
+    }
+
+    .about-description-center {
+        margin-bottom: 4rem;
+    }
+
+    .canva-phrase {
+        font-size: 1.3rem;
+        line-height: 1.7;
+        margin-bottom: 2.2rem;
+    }
+
+    .team-presentation-row {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    .team-member-card {
+        padding: 2.8rem 2.2rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .img-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .member-title h3 {
+        font-size: 1.7rem;
+    }
+
+    .bio-tags span {
+        font-size: 0.85rem;
+        padding: 0.55rem 1.1rem;
+    }
+
+    .member-bio p {
+        font-size: 1.1rem;
+    }
+
+    .linkedin-btn {
+        padding: 1rem 2.2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 767px) {
     .about {
         padding: 0 1.5rem;
         margin-bottom: 4rem;
     }
 
     .about h2 {
-        font-size: 2.2rem;
-        margin-bottom: 2rem;
+        font-size: 2rem;
+        margin-bottom: 1.8rem;
+    }
+
+    .about h2::after {
+        width: 150px;
+        margin: 0.8rem auto 0;
     }
 
     .about-description-center {
@@ -1156,66 +1428,56 @@
     }
 
     .canva-phrase {
-        font-size: 1.25rem;
-        line-height: 1.7;
+        font-size: 1.2rem;
         margin-bottom: 2rem;
     }
 
+    .cta-soft {
+        font-size: 1.1rem;
+        padding: 0.9rem 2.4rem;
+    }
+
     .team-presentation-row {
-        grid-template-columns: 1fr;
         gap: 3rem;
-        max-width: 700px;
-        margin: 0 auto;
     }
 
     .team-member-card {
         padding: 2.5rem 2rem;
-        max-width: 600px;
-        margin: 0 auto;
     }
 
     .img-wrapper {
         width: 130px;
         height: 130px;
+        margin-bottom: 1.8rem;
     }
 
     .member-title h3 {
         font-size: 1.6rem;
     }
 
+    .bio-tags {
+        gap: 0.7rem;
+    }
+
     .bio-tags span {
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         padding: 0.5rem 1rem;
     }
 
     .member-bio p {
         font-size: 1.05rem;
-    }
-
-    .linkedin-btn {
-        padding: 0.9rem 2rem;
-        font-size: 0.95rem;
+        line-height: 1.7;
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 599px) {
     .about {
         padding: 0 1.2rem;
         margin-bottom: 3.5rem;
     }
 
     .about h2 {
-        font-size: 1.9rem;
-        margin-bottom: 1.8rem;
-    }
-
-    .about h2::after {
-        width: 140px;
-        margin: 0.8rem auto 0;
-    }
-
-    .about-description-center {
-        margin-bottom: 3rem;
+        font-size: 1.8rem;
     }
 
     .canva-phrase {
@@ -1228,12 +1490,9 @@
         padding: 0.85rem 2.2rem;
     }
 
-    .team-presentation-row {
-        gap: 2.5rem;
-    }
-
     .team-member-card {
         padding: 2.2rem 1.8rem;
+        border-radius: 24px;
     }
 
     .img-wrapper {
@@ -1247,21 +1506,33 @@
     }
 
     .bio-tags {
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 0.6rem;
     }
 
     .bio-tags span {
-        font-size: 0.78rem;
+        font-size: 0.8rem;
         padding: 0.45rem 0.9rem;
+    }
+
+    .member-bio {
+        margin-bottom: 2.2rem;
     }
 
     .member-bio p {
         font-size: 1rem;
-        line-height: 1.65;
+        margin-bottom: 1rem;
+    }
+
+    .linkedin-btn {
+        padding: 0.9rem 2rem;
+        font-size: 0.95rem;
+        min-width: 200px;
     }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 479px) {
     .about {
         padding: 0 1rem;
         margin-bottom: 3rem;
@@ -1269,6 +1540,12 @@
 
     .about h2 {
         font-size: 1.7rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .about h2::after {
+        width: 130px;
+        height: 12px;
     }
 
     .canva-phrase {
@@ -1294,21 +1571,12 @@
 
     .member-title h3 {
         font-size: 1.4rem;
-    }
-
-    .bio-tags {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
+        margin-bottom: 0.8rem;
     }
 
     .bio-tags span {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.8rem;
-    }
-
-    .member-bio {
-        margin-bottom: 2rem;
+        font-size: 0.78rem;
+        padding: 0.4rem 0.85rem;
     }
 
     .member-bio p {
@@ -1317,68 +1585,9 @@
     }
 
     .linkedin-btn {
-        padding: 0.8rem 1.8rem;
-        font-size: 0.9rem;
-        min-width: 180px;
-    }
-}
-
-@media (max-width: 479px) {
-    .about {
-        padding: 0 0.8rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .about h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .about h2::after {
-        width: 120px;
-        height: 12px;
-    }
-
-    .canva-phrase {
-        font-size: 1rem;
-        margin-bottom: 1.3rem;
-    }
-
-    .cta-soft {
-        font-size: 0.95rem;
-        padding: 0.75rem 1.8rem;
-    }
-
-    .team-member-card {
-        padding: 1.8rem 1.3rem;
-        border-radius: 20px;
-    }
-
-    .img-wrapper {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 1.2rem;
-    }
-
-    .member-title h3 {
-        font-size: 1.3rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .bio-tags span {
-        font-size: 0.72rem;
-        padding: 0.35rem 0.75rem;
-    }
-
-    .member-bio p {
-        font-size: 0.95rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .linkedin-btn {
-        padding: 0.75rem 1.6rem;
-        font-size: 0.88rem;
-        min-width: 170px;
+        padding: 0.85rem 1.8rem;
+        font-size: 0.92rem;
+        min-width: 190px;
     }
 }
 
@@ -1398,12 +1607,12 @@
 @media (max-width: 1199px) {
     .contact {
         max-width: 95%;
-        padding: 4rem 2.5rem;
-        margin-bottom: 4rem;
+        padding: 4.5rem 3rem;
+        margin-bottom: 5rem;
     }
 
     .contact h2 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
     .social-links {
@@ -1412,59 +1621,139 @@
     }
 
     .social-button {
-        padding: 1.2rem 2.5rem;
-        min-width: 220px;
+        padding: 1.3rem 2.8rem;
+        min-width: 240px;
     }
 }
 
 @media (max-width: 991px) {
     .contact {
-        padding: 3.5rem 2rem;
-        margin-bottom: 3.5rem;
-        border-radius: 24px;
+        padding: 4rem 2.5rem;
+        margin-bottom: 4.5rem;
+        border-radius: 26px;
     }
 
     .contact h2 {
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
+        font-size: 2rem;
+        margin-bottom: 1.2rem;
     }
 
     .contact h2::after {
-        margin: 0.5rem auto 2rem;
+        margin: 0.6rem auto 2.5rem;
     }
 
     .contact-message {
-        font-size: 1.15rem;
-        margin-bottom: 2.5rem;
-        max-width: 600px;
+        font-size: 1.2rem;
+        margin-bottom: 3rem;
+        max-width: 650px;
     }
 
     .social-links {
         flex-direction: row;
         justify-content: center;
-        gap: 1.5rem;
-        margin-bottom: 3.5rem;
+        gap: 1.8rem;
+        margin-bottom: 4rem;
     }
 
     .social-button {
-        padding: 1.1rem 2.2rem;
-        min-width: 200px;
-        max-width: 280px;
+        padding: 1.2rem 2.5rem;
+        min-width: 220px;
+        max-width: 300px;
         flex: 1;
     }
 
     .contact-info {
-        padding: 1.5rem 2rem;
-        font-size: 0.95rem;
-        max-width: 500px;
+        padding: 1.6rem 2.2rem;
+        font-size: 1rem;
+        max-width: 550px;
     }
 }
 
 @media (max-width: 767px) {
     .contact {
+        padding: 3.5rem 2rem;
+        margin: 0 1.5rem 4rem;
+        border-radius: 24px;
+    }
+
+    .contact h2 {
+        font-size: 1.8rem;
+    }
+
+    .contact-message {
+        font-size: 1.1rem;
+        margin-bottom: 2.8rem;
+    }
+
+    .social-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .social-button {
+        width: 100%;
+        max-width: 350px;
+        padding: 1.1rem 2.3rem;
+        justify-content: center;
+    }
+
+    .contact-info {
+        padding: 1.5rem 2rem;
+        font-size: 0.95rem;
+        margin-top: 3rem;
+    }
+}
+
+@media (max-width: 599px) {
+    .contact {
         padding: 3rem 1.5rem;
-        margin: 0 1rem 3rem;
-        border-radius: 20px;
+        margin: 0 1rem 3.5rem;
+    }
+
+    .contact h2 {
+        font-size: 1.7rem;
+    }
+
+    .contact h2::after {
+        width: 130px;
+        margin: 0.5rem auto 2rem;
+    }
+
+    .contact-message {
+        font-size: 1.05rem;
+        margin-bottom: 2.5rem;
+        padding: 0 0.5rem;
+    }
+
+    .social-links {
+        margin-bottom: 3rem;
+    }
+
+    .social-button {
+        padding: 1rem 2rem;
+        max-width: 320px;
+        font-size: 1.05rem;
+    }
+
+    .social-button svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .contact-info {
+        padding: 1.4rem 1.8rem;
+        font-size: 0.9rem;
+        margin-top: 2.5rem;
+    }
+}
+
+@media (max-width: 479px) {
+    .contact {
+        padding: 2.5rem 1.2rem;
+        margin: 0 0.8rem 3rem;
+        border-radius: 22px;
     }
 
     .contact h2 {
@@ -1472,100 +1761,20 @@
     }
 
     .contact-message {
-        font-size: 1.05rem;
-        margin-bottom: 2.2rem;
-    }
-
-    .social-links {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.2rem;
-        margin-bottom: 3rem;
-    }
-
-    .social-button {
-        width: 100%;
-        max-width: 300px;
-        padding: 1rem 2rem;
-        justify-content: center;
-    }
-
-    .contact-info {
-        padding: 1.3rem 1.8rem;
-        font-size: 0.9rem;
-        margin-top: 2.5rem;
-    }
-}
-
-@media (max-width: 599px) {
-    .contact {
-        padding: 2.5rem 1.2rem;
-        margin: 0 0.8rem 2.5rem;
-    }
-
-    .contact h2 {
-        font-size: 1.5rem;
-    }
-
-    .contact h2::after {
-        width: 120px;
-        margin: 0.4rem auto 1.8rem;
-    }
-
-    .contact-message {
         font-size: 1rem;
-        margin-bottom: 2rem;
-        padding: 0 0.5rem;
-    }
-
-    .social-links {
-        margin-bottom: 2.5rem;
+        margin-bottom: 2.2rem;
     }
 
     .social-button {
         padding: 0.95rem 1.8rem;
-        max-width: 280px;
         font-size: 1rem;
-    }
-
-    .social-button svg {
-        width: 20px;
-        height: 20px;
-    }
-
-    .contact-info {
-        padding: 1.2rem 1.5rem;
-        font-size: 0.85rem;
-        margin-top: 2rem;
-    }
-}
-
-@media (max-width: 479px) {
-    .contact {
-        padding: 2.2rem 1rem;
-        margin: 0 0.5rem 2rem;
-        border-radius: 18px;
-    }
-
-    .contact h2 {
-        font-size: 1.4rem;
-    }
-
-    .contact-message {
-        font-size: 0.95rem;
-        margin-bottom: 1.8rem;
-    }
-
-    .social-button {
-        padding: 0.9rem 1.5rem;
-        font-size: 0.95rem;
         min-width: auto;
         max-width: 100%;
     }
 
     .contact-info {
-        padding: 1rem 1.3rem;
-        font-size: 0.82rem;
+        padding: 1.3rem 1.6rem;
+        font-size: 0.88rem;
     }
 }
 
@@ -1579,47 +1788,79 @@
 @media (max-width: 1199px) {
     .footer {
         max-width: 95%;
-        margin: 2rem auto 0;
-        padding: 2rem 2rem 1.5rem;
+        margin: 2.5rem auto 0;
+        padding: 2.5rem 2.5rem 1.8rem;
     }
 }
 
 @media (max-width: 991px) {
     .footer {
-        padding: 1.8rem 1.5rem 1.2rem;
-        margin-top: 1.5rem;
+        padding: 2rem 2rem 1.5rem;
+        margin-top: 2rem;
     }
 
     .footer-container {
         flex-direction: column;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1.8rem;
         text-align: center;
     }
 
     .footer-text {
         order: -1;
         text-align: center;
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
+        padding: 1rem 1.8rem;
+        font-size: 0.95rem;
+        max-width: 600px;
     }
 
     .footer-logo img {
-        height: 42px;
+        height: 48px;
     }
 }
 
 @media (max-width: 767px) {
     .footer {
+        padding: 1.8rem 1.5rem 1.2rem;
+        margin-top: 1.8rem;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .footer-text {
+        padding: 0.9rem 1.5rem;
+        font-size: 0.9rem;
+        max-width: 90%;
+    }
+
+    .footer-logo img {
+        height: 44px;
+    }
+}
+
+@media (max-width: 599px) {
+    .footer {
         padding: 1.5rem 1.2rem 1rem;
-        margin-top: 1.2rem;
+    }
+
+    .footer-text {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    .footer-logo img {
+        height: 40px;
+    }
+}
+
+@media (max-width: 479px) {
+    .footer {
+        padding: 1.3rem 1rem 0.8rem;
         border-radius: 18px 18px 0 0;
     }
 
     .footer-text {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.85rem;
-        max-width: 90%;
+        padding: 0.7rem 1rem;
+        font-size: 0.82rem;
     }
 
     .footer-logo img {
@@ -1627,42 +1868,11 @@
     }
 }
 
-@media (max-width: 599px) {
-    .footer {
-        padding: 1.3rem 1rem 0.8rem;
-    }
-
-    .footer-text {
-        padding: 0.6rem 1rem;
-        font-size: 0.8rem;
-    }
-
-    .footer-logo img {
-        height: 35px;
-    }
-}
-
-@media (max-width: 479px) {
-    .footer {
-        padding: 1.2rem 0.8rem 0.6rem;
-        border-radius: 16px 16px 0 0;
-    }
-
-    .footer-text {
-        padding: 0.5rem 0.9rem;
-        font-size: 0.78rem;
-    }
-
-    .footer-logo img {
-        height: 32px;
-    }
-}
-
 /* ================= UTILIDADES RESPONSIVAS ================= */
 .grid-responsive-2 {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.8rem;
 }
 
 @media (min-width: 600px) {
@@ -1674,14 +1884,14 @@
 @media (min-width: 992px) {
     .grid-responsive-2 {
         grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
+        gap: 2.5rem;
     }
 }
 
 .grid-responsive-3 {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.8rem;
 }
 
 @media (min-width: 768px) {
@@ -1693,62 +1903,62 @@
 @media (min-width: 1200px) {
     .grid-responsive-3 {
         grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
+        gap: 2.5rem;
     }
 }
 
 .container-fluid {
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 1.2rem;
 }
 
 @media (min-width: 576px) {
     .container-fluid {
-        padding: 0 1.5rem;
+        padding: 0 1.8rem;
     }
 }
 
 @media (min-width: 768px) {
     .container-fluid {
-        padding: 0 2rem;
+        padding: 0 2.5rem;
     }
 }
 
 @media (min-width: 1200px) {
     .container-fluid {
-        padding: 0 3rem;
+        padding: 0 3.5rem;
     }
 }
 
 @media (min-width: 1400px) {
     .container-fluid {
-        padding: 0 4rem;
+        padding: 0 4.5rem;
     }
 }
 
 .h1-responsive {
-    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
     line-height: 1.2;
 }
 
 .h2-responsive {
-    font-size: clamp(1.3rem, 4vw, 2.2rem);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     line-height: 1.3;
 }
 
 .h3-responsive {
-    font-size: clamp(1.1rem, 3vw, 1.8rem);
+    font-size: clamp(1.3rem, 3vw, 2rem);
     line-height: 1.4;
 }
 
 .p-responsive {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
     line-height: 1.6;
 }
 
 .spacing-responsive {
-    padding: clamp(1rem, 3vw, 3rem);
-    margin: clamp(0.5rem, 2vw, 2rem);
+    padding: clamp(1.2rem, 4vw, 3.5rem);
+    margin: clamp(0.8rem, 3vw, 2.5rem);
 }
 
 @media (max-width: 767px) {
@@ -1762,8 +1972,8 @@
     .menu-toggle,
     .close-menu,
     .mobile-menu-item {
-        min-height: 48px;
-        min-width: 48px;
+        min-height: 44px;
+        min-width: 44px;
     }
 
     input,
@@ -1787,7 +1997,7 @@
     }
 
     .hero-content {
-        padding: 2.5rem;
+        padding: 3rem;
     }
 }
 
@@ -1804,12 +2014,12 @@
 
     .team-presentation-row {
         grid-template-columns: repeat(2, 1fr);
-        gap: 4rem;
+        gap: 4.5rem;
         max-width: 1400px;
     }
 
     .team-member-card {
-        padding: 3.5rem 3rem;
+        padding: 4rem 3.5rem;
     }
 }
 
@@ -1903,7 +2113,7 @@
         margin-bottom: 1.5cm;
         box-shadow: none !important;
         border: 1px solid #ddd !important;
-        padding: 1rem !important;
+        padding: 1.2rem !important;
     }
 
     h1,
@@ -1914,16 +2124,15 @@
     }
 }
 
-
-/* ================= CORRECCIÓN HERO MOBILE ================= */
+/* ================= CORRECCIÓN HERO MOBILE (FONDO) ================= */
 @media (max-width: 991px) {
     .hero {
         background-attachment: scroll !important;
     }
-    
+
     .hero::before {
-        background: rgba(245, 245, 245, 0.15) !important;
-        backdrop-filter: blur(1px) !important;
+        background: rgba(245, 245, 245, 0.2) !important;
+        backdrop-filter: blur(2px) !important;
     }
 }
 
@@ -1936,12 +2145,12 @@
 
 @media (max-width: 767px) {
     .hero::before {
-        background: rgba(245, 245, 245, 0.1) !important;
+        background: rgba(245, 245, 245, 0.15) !important;
         backdrop-filter: none !important;
     }
-    
+
     .hero-content {
-        background: rgba(255, 255, 255, 0.85) !important;
-        backdrop-filter: blur(5px) !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(8px) !important;
     }
 }

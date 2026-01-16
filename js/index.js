@@ -6,13 +6,13 @@ const acordeonData = [
     {
         id: 1,
         title: "Gestión de proyectos",
+        slug: "services1",
         isOpen: false,
         items: [
             {
-                title: "Aprendizaje basado en proyectos",
-                description: "Laboratorios de entrenamiento intensivos en áreas IT y digitales, de corta duración y alto impacto. Diseñados para adquirir de manera rápida las habilidades técnicas e interpersonales demandadas por el mercado hoy.",
+                description: "Planificación, ejecución y seguimiento de proyectos o programas, asegurando que se cumplan los objetivos propuestos por las organizaciones.",
                 modality: "Online o Presencial (Mar del Plata)",
-                dedication: "         ",
+                dedication: "A definir según el programa",
                 icon: "📊",
             }
         ],
@@ -21,13 +21,24 @@ const acordeonData = [
     },
     {
         id: 2,
-        title: "Orientación laboral - profesional",
+        title: "Búsqueda y gestión de talento",
+        slug: "services2",
         isOpen: false,
+        generalDescription: "Servicio especializado de sourcing y reclutamiento integral. Retroalimentación constructiva, comunicación interna, programas para el compromiso del talento, clima y cultura, análisis de datos para la toma de decisiones.",
+        whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Búsqueda%20y%20Gestión%20de%20Talento",
+        buttonText: "Quiero más información"
+    },
+    {
+        id: 3,
+        title: "Orientación laboral - profesional",
+        slug: "services3",
+        isOpen: false,
+        generalDescription: "Encuentros de guía y acompañamiento para quienes desean formar parte del mercado laboral, potenciar su crecimiento profesional o reorientar su trayectoria actual.",
         items: [
             {
                 title: "¡Conectá con Oportunidades!",
                 description: "Diseño de CV/Portfolio y optimización de LinkedIn.",
-                dedication: "1 a 2 encuentros.",
+                dedication: "1 a 2 encuentros",
                 modality: "Online o Presencial (Mar del Plata)",
                 icon: "💼"
             }
@@ -36,29 +47,33 @@ const acordeonData = [
         buttonText: "Quiero más información"
     },
     {
-        id: 3,
-        title: "Capacitación y bienestar",
+        id: 4,
+        title: "Bienestar",
+        slug: "services4",
         isOpen: false,
+        generalDescription: "Sesiones de mindfulness, mentalización y respiración, administración del estrés y emociones. Planes formativos a medida.",
         items: [
             {
                 title: "Sesiones de Mindfulness, mentalización y respiración",
                 description: "Te ofrecerán beneficios para tu salud mental, emocional y física.",
-                dedication: "4 encuentros, frecuencia semanal.",
+                dedication: "4 encuentros, frecuencia semanal",
                 modality: "Online y Presencial (Mar del Plata)",
                 icon: "🧘‍♂️"
             },
         ],
-        whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Capacitación%20y%20Bienestar",
+        whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Bienestar",
         buttonText: "Quiero más información"
     },
     {
-        id: 4,
+        id: 5,
         title: "¡Sumate!",
+        slug: "services5",
         isOpen: false,
+        generalDescription: "Si tenés un conocimiento valioso para compartir, ¡te invitamos a crear tu microformación!",
         items: [
             {
                 title: "Crear mi microformación",
-                description: "Si tenés un conocimiento valioso para compartir, ¡te invitamos a crear tu microformación!",
+                description: "¿Tenés experiencia o conocimientos específicos que podrían ayudar a otros? Desarrollá tu propio contenido formativo con nuestro acompañamiento.",
                 icon: "🚀"
             },
         ],
@@ -67,23 +82,33 @@ const acordeonData = [
     },
 ];
 
-
-// ===== FUNCIONES DEL ACORDEÓN =====
-class AcordeonManager {
+// ===== MANEJADOR DE ACORDEONES Y SCROLL UNIFICADO =====
+class AcordeonScrollManager {
     constructor() {
         this.acordeonItems = [];
         this.container = document.getElementById('acordeon-container');
+        this.acordeonSection = document.querySelector('.acordeon-section');
+        this.header = document.querySelector("header");
+        this.sections = document.querySelectorAll("section[id]");
+        this.navLinks = document.querySelectorAll(".menu a, .mobile-menu a");
+        this.menuToggle = document.getElementById('menu-toggle');
+        this.mobileOverlay = document.getElementById('mobile-overlay');
+        this.mobileMenu = document.getElementById('mobile-menu');
+        
         this.init();
     }
 
     init() {
+        if (!this.container) return;
+
         this.renderAcordeon();
+        
         this.setupEventListeners();
+        
+        this.handleInitialHash();
     }
 
     renderAcordeon() {
-        if (!this.container) return;
-
         this.container.innerHTML = '';
 
         acordeonData.forEach(itemData => {
@@ -97,6 +122,7 @@ class AcordeonManager {
         const item = document.createElement('div');
         item.className = `acordeon-item ${itemData.isOpen ? 'active' : ''}`;
         item.dataset.id = itemData.id;
+        item.id = itemData.slug;
 
         const header = document.createElement('div');
         header.className = 'acordeon-header';
@@ -120,15 +146,24 @@ class AcordeonManager {
         const contentWrapper = document.createElement('div');
         contentWrapper.className = 'content-wrapper';
 
-        const itemsContainer = document.createElement('div');
-        itemsContainer.className = 'items-container';
+        if (itemData.generalDescription && itemData.generalDescription.trim()) {
+            const generalDescription = document.createElement('div');
+            generalDescription.className = 'acordeon-general-description';
+            generalDescription.innerHTML = `<p>${itemData.generalDescription}</p>`;
+            contentWrapper.appendChild(generalDescription);
+        }
 
-        itemData.items.forEach((subItem, index) => {
-            const subtituloItem = this.createSubtituloItem(subItem, index);
-            itemsContainer.appendChild(subtituloItem);
-        });
+        if (itemData.items && itemData.items.length > 0) {
+            const itemsContainer = document.createElement('div');
+            itemsContainer.className = 'items-container';
 
-        contentWrapper.appendChild(itemsContainer);
+            itemData.items.forEach((subItem, index) => {
+                const subtituloItem = this.createSubtituloItem(subItem, index);
+                itemsContainer.appendChild(subtituloItem);
+            });
+
+            contentWrapper.appendChild(itemsContainer);
+        }
 
         const whatsappButton = this.createWhatsAppButton(itemData);
         contentWrapper.appendChild(whatsappButton);
@@ -137,56 +172,69 @@ class AcordeonManager {
         item.appendChild(header);
         item.appendChild(content);
 
-        if (itemData.isOpen) {
-            setTimeout(() => {
-                const subtitulos = item.querySelectorAll('.subtitulo-item');
-                subtitulos.forEach((subtitulo, index) => {
-                    setTimeout(() => {
-                        subtitulo.style.opacity = '1';
-                        subtitulo.style.transform = 'translateY(0)';
-                    }, 100 * (index + 1));
-                });
-            }, 10);
-        }
-
         return item;
     }
 
     createSubtituloItem(subItem, index) {
         const item = document.createElement('div');
         item.className = 'subtitulo-item';
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
 
-        const detailsHTML = subItem.dedication && subItem.modality ? `
-            <div class="subtitulo-details">
-                <div class="detail-box">
-                    <span class="detail-label">Dedicación</span>
-                    <span class="detail-value">${subItem.dedication}</span>
-                </div>
-                <div class="detail-box">
-                    <span class="detail-label">Modalidad</span>
-                    <span class="detail-value">${subItem.modality}</span>
-                </div>
-            </div>
-        ` : '';
+        const hasDedication = subItem.dedication && subItem.dedication.trim();
+        const hasModality = subItem.modality && subItem.modality.trim();
+        const showDetails = hasDedication || hasModality;
 
-        item.innerHTML = `
-            <div class="icon-line-container">
-                <div class="icon-circle">
-                    <span class="emoji-icon">${subItem.icon}</span>
+        let detailsHTML = '';
+        if (showDetails) {
+            detailsHTML = '<div class="subtitulo-details">';
+            if (hasDedication) {
+                detailsHTML += `
+                    <div class="detail-box">
+                        <span class="detail-label">Dedicación</span>
+                        <span class="detail-value">${subItem.dedication}</span>
+                    </div>
+                `;
+            }
+            if (hasModality) {
+                detailsHTML += `
+                    <div class="detail-box">
+                        <span class="detail-label">Modalidad</span>
+                        <span class="detail-value">${subItem.modality}</span>
+                    </div>
+                `;
+            }
+            detailsHTML += '</div>';
+        }
+
+        if (!subItem.title || subItem.title.trim() === '') {
+            item.innerHTML = `
+                <div class="icon-line-container">
+                    <div class="icon-circle">
+                        <span class="emoji-icon">${subItem.icon}</span>
+                    </div>
+                    <div class="horizontal-line"></div>
                 </div>
-                <div class="horizontal-line"></div>
-            </div>
-            <div class="content-container">
-                <div class="subtitulo-header">
-                    <h4>${subItem.title}</h4>
+                <div class="content-container">
+                    <p class="subtitulo-descripcion">${subItem.description}</p>
+                    ${detailsHTML}
                 </div>
-                <p class="subtitulo-descripcion">${subItem.description}</p>
-                ${detailsHTML}
-            </div>
-        `;
+            `;
+        } else {
+            item.innerHTML = `
+                <div class="icon-line-container">
+                    <div class="icon-circle">
+                        <span class="emoji-icon">${subItem.icon}</span>
+                    </div>
+                    <div class="horizontal-line"></div>
+                </div>
+                <div class="content-container">
+                    <div class="subtitulo-header">
+                        <h4>${subItem.title}</h4>
+                    </div>
+                    <p class="subtitulo-descripcion">${subItem.description}</p>
+                    ${detailsHTML}
+                </div>
+            `;
+        }
 
         return item;
     }
@@ -198,6 +246,7 @@ class AcordeonManager {
         container.innerHTML = `
             <a href="https://wa.me/5491121936762?text=${itemData.whatsappMessage}" 
                target="_blank" 
+               rel="noopener noreferrer"
                class="whatsapp-category-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 448 512">
                     <path d="M380.9 97.1C339 55.2 283.1 32 224 32 100.3 32 0 132.3 0 256c0 45.2 12 89.4 34.8 128.1L0 480l98.5-34.3C136.6 468 179.9 480 224 480c123.7 0 224-100.3 224-224 0-59.1-23.2-115-67.1-158.9zM224 433.9c-38.7 0-76.6-10.4-109.7-30.1l-7.8-4.6-58.5 20.4 20.4-58.5-4.6-7.8C62.5 320.6 52.1 282.7 52.1 244 52.1 142 122 72.1 224 72.1c54.3 0 105.3 21.1 143.7 59.4S440 189.7 440 244c0 102-69.9 189.9-216 189.9zm100.7-138.5l-34.7-17.4c-4.7-2.3-10.1-1.5-13.8 2l-14.4 14.7c-34.8-17.8-62.7-45.7-80.5-80.5l14.7-14.4c3.5-3.7 4.3-9.1 2-13.8l-17.4-34.7c-3.4-6.7-11.6-9.3-18-5.9l-25.1 12.6c-6.6 3.3-10.7 10.1-10.7 17.3 0 91.7 74.3 166 166 166 7.2 0 14-4.1 17.3-10.7l12.6-25.1c3.4-6.4.8-14.6-5.9-18z"/>
@@ -219,43 +268,131 @@ class AcordeonManager {
             }
         });
 
-        this.setupHoverEffects();
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+
+            const targetId = link.getAttribute('href');
+            if (targetId === '#') return;
+
+            if (targetId.startsWith('#services')) {
+                e.preventDefault();
+                this.openAcordeonAndScroll(targetId);
+                this.closeMobileMenu();
+                return;
+            }
+
+            const target = document.querySelector(targetId);
+            if (target) {
+                e.preventDefault();
+                this.smoothScrollTo(target);
+                this.updateActiveNavLink(targetId);
+                this.closeMobileMenu();
+            }
+        });
+
+        if (this.menuToggle && this.mobileMenu) {
+            this.menuToggle.addEventListener('click', () => this.toggleMobileMenu());
+            this.mobileOverlay.addEventListener('click', () => this.closeMobileMenu());
+            
+            const mobileLinks = document.querySelectorAll('.mobile-menu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => this.closeMobileMenu());
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') this.closeMobileMenu();
+            });
+        }
+
+        window.addEventListener('scroll', () => this.onScroll());
     }
 
-    setupHoverEffects() {
+    openAcordeonAndScroll(targetId) {
+        const targetAcordeon = document.querySelector(targetId);
+        if (!targetAcordeon) return;
+
+        this.closeAllAcordeons();
+
         setTimeout(() => {
-            document.querySelectorAll('.subtitulo-item').forEach(subtitulo => {
-                subtitulo.addEventListener('mouseenter', () => {
-                    const icon = subtitulo.querySelector('.icon-circle');
-                    const line = subtitulo.querySelector('.horizontal-line');
-
-                    if (icon) {
-                        icon.style.transform = 'scale(1.05)';
-                        icon.style.boxShadow = '0 8px 30px rgba(212, 225, 87, 0.2)';
-                    }
-
-                    if (line) {
-                        line.style.width = '60px';
-                        line.style.background = 'linear-gradient(90deg, var(--lima), #4CAF50)';
-                    }
-                });
-
-                subtitulo.addEventListener('mouseleave', () => {
-                    const icon = subtitulo.querySelector('.icon-circle');
-                    const line = subtitulo.querySelector('.horizontal-line');
-
-                    if (icon) {
-                        icon.style.transform = 'scale(1)';
-                        icon.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.08)';
-                    }
-
-                    if (line) {
-                        line.style.width = '';
-                        line.style.background = '';
-                    }
-                });
+            this.openAcordeon(targetAcordeon);
+            
+            const acordeonPosition = this.acordeonSection.getBoundingClientRect().top + window.pageYOffset;
+            const headerHeight = this.header ? this.header.offsetHeight : 80;
+            const targetPosition = acordeonPosition - headerHeight - 20;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
             });
+            
+            history.pushState(null, null, targetId);
+            
+            this.updateActiveNavLink('#services');
         }, 100);
+    }
+
+    handleInitialHash() {
+        setTimeout(() => {
+            if (window.location.hash) {
+                const hash = window.location.hash;
+                
+                if (hash.startsWith('#services')) {
+                    const acordeonElement = document.querySelector(hash);
+                    if (acordeonElement && acordeonElement.classList.contains('acordeon-item')) {
+                        this.closeAllAcordeons();
+                        
+                        setTimeout(() => {
+                            this.openAcordeon(acordeonElement);
+                            
+                            setTimeout(() => {
+                                const acordeonPosition = this.acordeonSection.getBoundingClientRect().top + window.pageYOffset;
+                                const headerHeight = this.header ? this.header.offsetHeight : 80;
+                                const targetPosition = acordeonPosition - headerHeight - 20;
+                                
+                                window.scrollTo({
+                                    top: targetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }, 300);
+                        }, 100);
+                    }
+                } else {
+                    const target = document.querySelector(hash);
+                    if (target) {
+                        this.smoothScrollTo(target);
+                        this.updateActiveNavLink(hash);
+                    }
+                }
+            }
+        }, 500);
+    }
+
+    smoothScrollTo(targetElement, offset = SCROLL_OFFSET) {
+        if (!targetElement) return;
+        
+        const targetPosition = targetElement.offsetTop - offset;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        const duration = 800;
+        let start = null;
+
+        function animation(currentTime) {
+            if (start === null) start = currentTime;
+            const timeElapsed = currentTime - start;
+            const run = ease(timeElapsed, startPosition, distance, duration);
+            window.scrollTo(0, run);
+            if (timeElapsed < duration) requestAnimationFrame(animation);
+        }
+
+        function ease(t, b, c, d) {
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t + b;
+            t--;
+            return -c / 2 * (t * (t - 2) - 1) + b;
+        }
+
+        requestAnimationFrame(animation);
     }
 
     toggleAcordeon(header) {
@@ -266,12 +403,9 @@ class AcordeonManager {
 
         if (!isActive) {
             this.closeAllAcordeons();
-        }
-
-        if (isActive) {
-            this.closeAcordeon(item);
-        } else {
             this.openAcordeon(item);
+        } else {
+            this.closeAcordeon(item);
         }
     }
 
@@ -285,17 +419,8 @@ class AcordeonManager {
         }
 
         if (icon) {
-            icon.classList.remove('fa-chevron-down');
-            icon.classList.add('fa-chevron-up');
+            icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
         }
-
-        const subtitulos = item.querySelectorAll('.subtitulo-item');
-        subtitulos.forEach((subtitulo, index) => {
-            setTimeout(() => {
-                subtitulo.style.opacity = '1';
-                subtitulo.style.transform = 'translateY(0)';
-            }, 100 * (index + 1));
-        });
     }
 
     closeAcordeon(item) {
@@ -308,15 +433,8 @@ class AcordeonManager {
         }
 
         if (icon) {
-            icon.classList.remove('fa-chevron-up');
-            icon.classList.add('fa-chevron-down');
+            icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
         }
-
-        const subtitulos = item.querySelectorAll('.subtitulo-item');
-        subtitulos.forEach(subtitulo => {
-            subtitulo.style.opacity = '0';
-            subtitulo.style.transform = 'translateY(20px)';
-        });
     }
 
     closeAllAcordeons() {
@@ -327,80 +445,14 @@ class AcordeonManager {
         });
     }
 
-    openAllAcordeons() {
-        this.acordeonItems.forEach(item => {
-            this.openAcordeon(item);
-        });
-    }
-
-    refreshContentHeights() {
-        this.acordeonItems.forEach(item => {
-            if (item.classList.contains('active')) {
-                const content = item.querySelector('.acordeon-content');
-                if (content) {
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                }
-            }
-        });
-    }
-}
-
-// ===== FUNCIONES DE NAVEGACIÓN Y SCROLL =====
-class NavigationManager {
-    constructor() {
-        this.header = document.querySelector("header");
-        this.sections = document.querySelectorAll("section");
-        this.navLinks = document.querySelectorAll(".menu a, .mobile-menu a");
-        this.init();
-    }
-
-    init() {
-        this.setupSmoothScroll();
-        this.setupScrollUI();
-        this.initializeScrollState();
-        this.setupMobileMenuLinks();
-    }
-
-    setupSmoothScroll() {
-        document.addEventListener("click", e => {
-            const link = e.target.closest('a[href^="#"]');
-            if (!link) return;
-
-            const targetId = link.getAttribute("href");
-            if (targetId === "#") return;
-
-            const target = document.querySelector(targetId);
-            if (!target) return;
-
-            e.preventDefault();
-            window.scrollTo({
-                top: target.offsetTop - SCROLL_OFFSET,
-                behavior: "smooth"
-            });
-
-            this.updateActiveNavLink(targetId);
-            this.closeMobileMenu();
-        });
-    }
-
-    setupScrollUI() {
-        window.addEventListener('scroll', () => {
-            this.onScrollUI();
-        });
-    }
-
-    initializeScrollState() {
-        this.onScrollUI();
-    }
-
-    onScrollUI() {
+    onScroll() {
         if (this.header) {
             this.header.classList.toggle("scrolled", window.scrollY > 50);
         }
 
         let currentSection = "";
         this.sections.forEach(sec => {
-            const sectionTop = sec.offsetTop - 200;
+            const sectionTop = sec.offsetTop - 150;
             const sectionHeight = sec.offsetHeight;
             if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                 currentSection = sec.id;
@@ -418,28 +470,26 @@ class NavigationManager {
         });
     }
 
-    setupMobileMenuLinks() {
-        const mobileLinks = document.querySelectorAll('.mobile-menu a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                this.closeMobileMenu();
-            });
-        });
+    toggleMobileMenu() {
+        if (this.mobileMenu.classList.contains('active')) {
+            this.closeMobileMenu();
+        } else {
+            this.openMobileMenu();
+        }
+    }
+
+    openMobileMenu() {
+        this.mobileOverlay.classList.add('active');
+        this.mobileMenu.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        this.menuToggle.innerHTML = '<i class="fas fa-times"></i>';
     }
 
     closeMobileMenu() {
-        const overlay = document.getElementById('mobile-overlay');
-        const menu = document.getElementById('mobile-menu');
-        if (overlay && menu) {
-            overlay.classList.remove('active');
-            menu.classList.remove('active');
-            document.body.style.overflow = '';
-
-            const menuToggle = document.getElementById('menu-toggle');
-            if (menuToggle) {
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        }
+        this.mobileOverlay.classList.remove('active');
+        this.mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+        this.menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
     }
 }
 
@@ -501,7 +551,6 @@ class InfiniteCarousel {
 
         this.tracks = [
             { id: "top-track", speed: 120 },
-            { id: "middle-track", speed: 100 },
             { id: "bottom-track", speed: 140 }
         ];
 
@@ -514,7 +563,6 @@ class InfiniteCarousel {
 
         this.container.innerHTML = `
             <h2>Nuestro Trayecto</h2>
-            
             <div class="tracks-container">
                 ${this.tracks.map(track => `
                     <div class="track" id="${track.id}">
@@ -525,10 +573,7 @@ class InfiniteCarousel {
         `;
 
         this.renderTracks();
-
-        this.waitForImages().then(() => {
-            this.bindEvents();
-        });
+        this.bindEvents();
     }
 
     renderTracks() {
@@ -537,15 +582,18 @@ class InfiniteCarousel {
             if (!trackEl) return;
 
             const trackContent = trackEl.querySelector('.track-content');
-
             let itemsHTML = '';
-            for (let i = 0; i < 5; i++) {
+
+            for (let i = 0; i < 3; i++) {
                 this.events.forEach(event => {
                     itemsHTML += this.createCarouselItem(event);
                 });
             }
 
             trackContent.innerHTML = itemsHTML;
+            
+            const animationDuration = track.speed;
+            trackContent.style.animation = `scroll-${track.id.includes('top') ? 'top' : 'bottom'} ${animationDuration}s linear infinite`;
         });
     }
 
@@ -564,19 +612,22 @@ class InfiniteCarousel {
         `;
     }
 
-    async waitForImages() {
-        const images = document.querySelectorAll('.carousel-item img');
-        const promises = Array.from(images).map(img => {
-            if (img.complete) return Promise.resolve();
-            return new Promise(resolve => {
-                img.onload = resolve;
-                img.onerror = resolve;
+    bindEvents() {
+        this.tracks.forEach(track => {
+            const trackEl = document.getElementById(track.id);
+            if (!trackEl) return;
+
+            trackEl.addEventListener('mouseenter', () => {
+                const content = trackEl.querySelector('.track-content');
+                content.style.animationPlayState = 'paused';
+            });
+
+            trackEl.addEventListener('mouseleave', () => {
+                const content = trackEl.querySelector('.track-content');
+                content.style.animationPlayState = 'running';
             });
         });
-
-        await Promise.all(promises);
     }
-
 
     escapeHTML(text) {
         const div = document.createElement('div');
@@ -585,136 +636,55 @@ class InfiniteCarousel {
     }
 }
 
-// ===== MENÚ MÓVIL =====
-class MobileMenuManager {
-    constructor() {
-        this.menuToggle = document.getElementById('menu-toggle');
-        this.mobileOverlay = document.getElementById('mobile-overlay');
-        this.mobileMenu = document.getElementById('mobile-menu');
-        this.init();
-    }
-
-    init() {
-        if (!this.menuToggle || !this.mobileMenu) return;
-
-        this.menuToggle.addEventListener('click', () => this.toggleMobileMenu());
-        this.mobileOverlay.addEventListener('click', () => this.closeMobileMenu());
-
-        const mobileLinks = document.querySelectorAll('.mobile-menu a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => this.closeMobileMenu());
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') this.closeMobileMenu();
-        });
-    }
-
-    toggleMobileMenu() {
-        if (this.mobileMenu.classList.contains('active')) {
-            this.closeMobileMenu();
-        } else {
-            this.openMobileMenu();
-        }
-    }
-
-    openMobileMenu() {
-        this.mobileOverlay.classList.add('active');
-        this.mobileMenu.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        this.menuToggle.innerHTML = '<i class="fas fa-times"></i>';
-    }
-
-    closeMobileMenu() {
-        this.mobileOverlay.classList.remove('active');
-        this.mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
-        this.menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    }
-}
-
 // ===== INICIALIZACIÓN =====
-let acordeonManager, navigationManager, carousel, mobileMenuManager;
+let acordeonScrollManager, carousel;
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     console.log('Inicializando UMI...');
 
-    acordeonManager = new AcordeonManager();
-
-    navigationManager = new NavigationManager();
-
-    mobileMenuManager = new MobileMenuManager();
+    acordeonScrollManager = new AcordeonScrollManager();
 
     if (document.getElementById("carousel-container")) {
         carousel = new InfiniteCarousel();
     }
 
-    window.addEventListener('resize', function () {
-        if (acordeonManager) {
-            acordeonManager.refreshContentHeights();
+    window.addEventListener('resize', () => {
+        if (acordeonScrollManager) {
+            acordeonScrollManager.acordeonItems.forEach(item => {
+                if (item.classList.contains('active')) {
+                    const content = item.querySelector('.acordeon-content');
+                    if (content) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    }
+                }
+            });
         }
     });
-
-    function handleResize() {
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileOverlay = document.getElementById('mobile-overlay');
-
-        if (window.innerWidth > 992) {
-            mobileMenu.classList.remove('active');
-            mobileOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-
-            const menuToggle = document.getElementById('menu-toggle');
-            if (menuToggle) {
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            }
-        }
-    }
-
-    window.addEventListener('resize', handleResize);
 });
 
 // ===== FUNCIONES GLOBALES =====
-window.openAllAcordeons = function () {
-    if (acordeonManager) {
-        acordeonManager.openAllAcordeons();
-    }
+window.openAllAcordeons = () => {
+    if (acordeonScrollManager) acordeonScrollManager.openAllAcordeons();
 };
 
-window.closeAllAcordeons = function () {
-    if (acordeonManager) {
-        acordeonManager.closeAllAcordeons();
-    }
+window.closeAllAcordeons = () => {
+    if (acordeonScrollManager) acordeonScrollManager.closeAllAcordeons();
 };
 
-window.toggleAcordeon = function (header) {
-    if (acordeonManager) {
-        acordeonManager.toggleAcordeon(header);
-    }
-};
-
-window.scrollToContact = function () {
+window.scrollToContact = () => {
     const contactSection = document.querySelector('#contact');
     if (contactSection) {
-        window.scrollTo({
-            top: contactSection.offsetTop - SCROLL_OFFSET,
-            behavior: "smooth"
-        });
-
-        if (navigationManager) {
-            navigationManager.updateActiveNavLink('#contact');
+        if (acordeonScrollManager) {
+            acordeonScrollManager.smoothScrollTo(contactSection);
+            acordeonScrollManager.updateActiveNavLink('#contact');
         }
     }
 };
 
-window.openMobileMenu = function () {
-    if (mobileMenuManager) {
-        mobileMenuManager.openMobileMenu();
-    }
+window.openMobileMenu = () => {
+    if (acordeonScrollManager) acordeonScrollManager.openMobileMenu();
 };
 
-window.closeMobileMenu = function () {
-    if (mobileMenuManager) {
-        mobileMenuManager.closeMobileMenu();
-    }
+window.closeMobileMenu = () => {
+    if (acordeonScrollManager) acordeonScrollManager.closeMobileMenu();
 };

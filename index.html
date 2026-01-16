@@ -33,7 +33,7 @@
         <!-- Menú desktop -->
         <nav class="nav hidden-mobile">
             <ul class="menu">
-                <li><a href="#services">Servicios</a></li>
+                <li><a href="#service">Servicios</a></li>
                 <li><a href="#trayecto">Nuestro Trayecto</a></li>
                 <li><a href="#about" class="active">Nosotros</a></li>
                 <li><a href="#contact">Contacto</a></li>
@@ -80,7 +80,7 @@
                     <h1 class="talento-accion">Talento en Acción</h1>
                 </div>
                 <div class="hero-subtitle">
-                    <p>Consultoría y desarrollo profesional con propósito.<br>Donde el talento encuentra su dirección.
+                    <p>Consultoría y desarrollo profesional<br>con propósito.
                     </p>
                     <button onclick="scrollToContact()" class="cta-button">¡Escribinos para empezar!</button>
                 </div>
@@ -88,51 +88,64 @@
         </section>
 
         <!-- SERVICIOS -->
-        <section id="services" class="services">
+        <section id="service" class="services">
             <h2>Nuestros Servicios</h2>
+            <p class="services-subtitle">¡Haz click en alguno de nuestro servicios y obten más información!</p>
 
             <div class="services-grid">
-                <article class="service-card">
-                    <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de proyectos">
+                <a href="#services1" class="service-card">
+                    <div class="service-icon-wrapper">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de proyectos">
+                    </div>
                     <h3>Gestión de Proyectos</h3>
-                    <p>Planificación, ejecución y seguimiento de proyectos o programas, asegurando que se cumplan los
-                        objetivos propuestos por las organizaciones.</p>
-                </article>
+                    <div class="service-cta">
+                        <span>Ver detalles</span>
+                    </div>
+                </a>
 
-                <article class="service-card">
-                    <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de talento">
+                <a href="#services2" class="service-card">
+                    <div class="service-icon-wrapper">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de talento">
+                    </div>
                     <h3>Búsqueda y Gestión de Talento</h3>
-                    <p>Servicio especializado de sourcing y reclutamiento integral. Retroalimentación constructiva,
-                        comunicación interna, programas para el compromiso del talento, clima y cultura, análisis de
-                        datos para la toma de decisiones.</p>
-                </article>
+                    <div class="service-cta">
+                        <span>Ver detalles</span>
+                    </div>
+                </a>
 
-                <article class="service-card">
-                    <img class="service-icon" src="img/ola-verde.png" alt="Icono de orientación laboral">
+                <a href="#services3" class="service-card">
+                    <div class="service-icon-wrapper">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de orientación laboral">
+                    </div>
                     <h3>Orientación laboral - profesional</h3>
-                    <p>Encuentros de guía y acompañamiento para quienes desean formar parte del mercado laboral,
-                        potenciar su crecimiento profesional o reorientar su trayectoria actual.</p>
-                </article>
+                    <div class="service-cta">
+                        <span>Ver detalles</span>
+                    </div>
+                </a>
 
-                <article class="service-card">
-                    <img class="service-icon" src="img/ola-verde.png" alt="Icono de capacitación y bienestar">
-                    <h3>Capacitación y Bienestar</h3>
-                    <p>Sesiones de mindfulness, mentalización y respiración, administración del estrés y emociones.
-                        Planes formativos a medida.</p>
-                </article>
+                <a href="#services4" class="service-card">
+                    <div class="service-icon-wrapper">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de capacitación y bienestar">
+                    </div>
+                    <h3>Bienestar</h3>
+                    <div class="service-cta">
+                        <span>Ver detalles</span>
+                    </div>
+                </a>
             </div>
         </section>
 
         <!-- SECCIÓN ACORDEÓN -->
         <section class="acordeon-section">
             <div class="acordeon-container" id="acordeon-container">
-
+                <!-- Los acordeones se generan dinámicamente con JavaScript -->
             </div>
         </section>
 
+        <!-- SECCIÓN CARRUSEL -->
         <section class="carousel-section" id="trayecto">
             <div class="carousel-container" id="carousel-container">
-
+                <!-- El carrusel se genera dinámicamente con JavaScript -->
             </div>
         </section>
 
