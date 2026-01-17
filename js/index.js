@@ -329,7 +329,7 @@ class AcordeonScrollManager {
                class="whatsapp-category-button"
                aria-label="${itemData.buttonText} por WhatsApp">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 448 512" aria-hidden="true">
-                    <path d="M380.9 97.1C339 55.2 283.1 32 224 32 100.3 32 0 132.3 0 256c0 45.2 12 89.4 34.8 128.1L0 480l98.5-34.3C136.6 468 179.9 480 224 480c123.7 0 224-100.3 224-224 0-59.1-23.2-115-67.1-158.9zM224 433.9c-38.7 0-76.6-10.4-109.7-30.1l-7.8-4.6-58.5 20.4 20.4-58.5-4.6-7.8C62.5 320.6 52.1 282.7 52.1 244 52.1 142 122 72.1 224 72.1c54.3 0 105.3 21.1 143.7 59.4S440 189.7 440 244c0 102-69.9 189.9-216 189.9zm100.7-138.5l-34.7-17.4c-4.7-2.3-10.1-1.5-13.8 2l-14.4 14.7c-34.8-17.8-62.7-45.7-80.5-80.5l14.7-14.4c3.5-3.7 4.3-9.1 2-13.8l-17.4-34.7c-3.4-6.7-11.6-9.3-18-5.9l-25.1 12.6c-6.6 3.3-10.7 10.1-10.7 17.3 0 91.7 74.3 166 166 166 7.2 0 14-4.1 17.3-10.7l12.6-25.1c3.4-6.4.8-14.6-5.9-18z"/>
+                    <path d="M380.9 97.1C339 55.2 283.1 32 224 32 100.3 32 0 132.3 0 256c0 45.2 12 89.4 34.8 128.1L0 480l98.5-34.3C136.6 468 179.9 480 224 480c123.7 0 224-100.3 224-224 0-59.1-23.2-115-67.1-158.9zM224 433.9c-38.7 0-76.6-10.4-109.7-30.1l-7.8-4.6-58.5 20.4 20.4-58.5-4.6-7.8C62.5 320.6 52.1 282.7 52.1 244 52.1 142 122 72.1 224 72.1c54.3 0 105.3 21.1 143.7 59.4S440 189.7 440 244c0 102-69.9 189.9-216 189.9zm100.70-138.5l-34.7-17.4c-4.7-2.3-10.1-1.5-13.8 2l-14.4 14.7c-34.8-17.8-62.7-45.7-80.5-80.5l14.7-14.4c3.5-3.7 4.3-9.1 2-13.8l-17.4-34.7c-3.4-6.7-11.6-9.3-18-5.9l-25.1 12.6c-6.6 3.3-10.7 10.1-10.7 17.3 0 91.7 74.3 166 166 166 7.2 0 14-4.1 17.3-10.7l12.6-25.1c3.4-6.4.8-14.6-5.9-18z"/>
                 </svg>
                 ${itemData.buttonText}
             </a>
@@ -590,7 +590,7 @@ class AcordeonScrollManager {
         document.body.style.overflow = 'hidden';
         this.menuToggle.classList.add('active');
         this.menuToggle.setAttribute('aria-expanded', 'true');
-        this.menuToggle.innerHTML = '<span class="sr-only">Cerrar menú</span><i class="fas fa-times" aria-hidden="true"></i>';
+
         this.isMobileMenuOpen = true;
 
         setTimeout(() => {
@@ -606,7 +606,7 @@ class AcordeonScrollManager {
         document.body.style.overflow = '';
         this.menuToggle.classList.remove('active');
         this.menuToggle.setAttribute('aria-expanded', 'false');
-        this.menuToggle.innerHTML = '<span class="sr-only">Menú</span><i class="fas fa-bars" aria-hidden="true"></i>';
+
         this.isMobileMenuOpen = false;
 
         this.menuToggle.focus();
@@ -623,7 +623,7 @@ class InfiniteCarousel {
             { image: "img/trayecto/IMG_0410.jpg", title: "", subtitle: "", position: "top" },
             { image: "img/trayecto/IMG_0989.jpg", title: "", subtitle: "", position: "center" },
             { image: "img/trayecto/IMG_0991.jpg", title: "", subtitle: "", position: "center" },
-            { image: "img/trayecto/IMG_2833.jpg", title: "", subtitle: "", position: "top" },
+            { image: "img/trayecto/IMG_2833.jpg", title: "", subtitle: "", position: "center" },
             { image: "img/trayecto/kari y gabi.jpg", title: "", subtitle: "", position: "center" }
         ];
 
