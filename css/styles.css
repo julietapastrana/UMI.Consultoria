@@ -66,6 +66,7 @@
 
     .menu-toggle {
         flex-shrink: 0;
+        display: flex !important; 
     }
 }
 
@@ -354,6 +355,7 @@
     transform: translateX(4px);
 }
 
+/* SECCIÓN ACORDEÓN - CORREGIDO */
 .acordeon-section {
     padding: 40px 16px;
     background: transparent;
@@ -451,7 +453,6 @@
     margin: 0;
     letter-spacing: -0.3px;
     position: relative;
-    padding-bottom: 8px;
     line-height: 1.4;
     max-width: 100%;
     display: flex;
@@ -783,7 +784,6 @@
     max-width: 100%;
 }
 
-/* CARRUSEL - SECCIÓN CRÍTICA PARA MÓVIL */
 .carousel-section {
     padding: 60px 0;
     overflow: hidden;

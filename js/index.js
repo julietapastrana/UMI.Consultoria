@@ -2,10 +2,9 @@ const CONFIG = {
     SCROLL_OFFSET: 100,
     ANIMATION_DURATION: 800,
     MOBILE_BREAKPOINT: 1199,
-    CAROUSEL_SPEED_MOBILE: 30000, // Más lento en móvil
+    CAROUSEL_SPEED_MOBILE: 30000,
     CAROUSEL_SPEED_DESKTOP: 20000
 };
-
 
 const acordeonData = [
     {
@@ -589,6 +588,7 @@ class AcordeonScrollManager {
         this.mobileMenu.classList.add('active');
         document.body.classList.add('mobile-menu-open');
         document.body.style.overflow = 'hidden';
+        this.menuToggle.classList.add('active');
         this.menuToggle.setAttribute('aria-expanded', 'true');
         this.menuToggle.innerHTML = '<span class="sr-only">Cerrar menú</span><i class="fas fa-times" aria-hidden="true"></i>';
         this.isMobileMenuOpen = true;
@@ -604,6 +604,7 @@ class AcordeonScrollManager {
         this.mobileMenu.classList.remove('active');
         document.body.classList.remove('mobile-menu-open');
         document.body.style.overflow = '';
+        this.menuToggle.classList.remove('active');
         this.menuToggle.setAttribute('aria-expanded', 'false');
         this.menuToggle.innerHTML = '<span class="sr-only">Menú</span><i class="fas fa-bars" aria-hidden="true"></i>';
         this.isMobileMenuOpen = false;
