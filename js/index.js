@@ -1,8 +1,11 @@
 const CONFIG = {
     SCROLL_OFFSET: 100,
     ANIMATION_DURATION: 800,
-    MOBILE_BREAKPOINT: 1199
+    MOBILE_BREAKPOINT: 1199,
+    CAROUSEL_SPEED_MOBILE: 30000, // Más lento en móvil
+    CAROUSEL_SPEED_DESKTOP: 20000
 };
+
 
 const acordeonData = [
     {
@@ -611,250 +614,86 @@ class AcordeonScrollManager {
 
 class InfiniteCarousel {
     constructor() {
-        this.events = [
-            {
-                image: "img/trayecto/IMG_0294.jpg",
-                title: " ",
-                subtitle: " ",
-                position: "center"
-            },
-            {
-                image: "img/trayecto/IMG_0410.jpg",
-                title: " ",
-                subtitle: " ",
-                position: "top"
-            },
-            {
-                image: "img/trayecto/IMG_0989.jpg",
-                title: " ",
-                subtitle: " ",
-                position: "center"
-            },
-            {
-                image: "img/trayecto/IMG_0991.jpg",
-                title: " ",
-                subtitle: " ",
-                position: "center"
-            },
-            {
-                image: "img/trayecto/IMG_2833.jpg",
-                title: " ",
-                subtitle: " ",
-                position: "top"
-            },
-            {
-                image: "img/trayecto/kari y gabi.jpg",
-                title: " ",
-                subtitle: " ",
-                position: "center"
-            }
-        ];
-
-        this.tracks = [
-            { id: "top-track", speed: 140, direction: "left" },
-            { id: "bottom-track", speed: 160, direction: "right" }
-        ];
-
         this.container = document.getElementById("carousel-container");
-        this.isPaused = false;
-        this.animationId = null;
+        this.isMobile = Utils.isMobile();
+
+        this.events = [
+            { image: "img/trayecto/IMG_0294.jpg", title: "", subtitle: "", position: "center" },
+            { image: "img/trayecto/IMG_0410.jpg", title: "", subtitle: "", position: "top" },
+            { image: "img/trayecto/IMG_0989.jpg", title: "", subtitle: "", position: "center" },
+            { image: "img/trayecto/IMG_0991.jpg", title: "", subtitle: "", position: "center" },
+            { image: "img/trayecto/IMG_2833.jpg", title: "", subtitle: "", position: "center" },
+            { image: "img/trayecto/kari y gabi.jpg", title: "", subtitle: "", position: "center" }
+        ];
+
+        this.speeds = {
+            desktop: { top: 120, bottom: 140 },
+            tablet: { top: 150, bottom: 170 },
+            mobile: { top: 180, bottom: 200 }
+        };
+
         this.init();
     }
 
     init() {
         if (!this.container) return;
 
-        this.container.innerHTML = '';
-
         this.container.innerHTML = `
             <h2 id="trayecto-title" class="text-center">Nuestro Trayecto</h2>
-            <div class="tracks-container" role="region" aria-labelledby="trayecto-title">
-                ${this.tracks.map(track => `
-                    <div class="track" id="${track.id}" aria-label="Carrusel ${track.id === 'top-track' ? 'superior' : 'inferior'}">
-                        <div class="track-content" role="list"></div>
-                    </div>
-                `).join('')}
+            <div class="tracks-container">
+                <div class="track" id="top-track">
+                    <div class="track-content"></div>
+                </div>
+                <div class="track" id="bottom-track">
+                    <div class="track-content"></div>
+                </div>
             </div>
         `;
 
         this.renderTracks();
-        this.addAnimationStyles();
+        this.applyAnimations();
         this.bindEvents();
-        this.startAnimation();
-    }
-
-    addAnimationStyles() {
-        if (!document.getElementById('carousel-animations')) {
-            const style = document.createElement('style');
-            style.id = 'carousel-animations';
-            style.textContent = `
-                @keyframes scroll-left {
-                    0% { transform: translateX(0); }
-                    100% { transform: translateX(calc(-100% / 2)); }
-                }
-                
-                @keyframes scroll-right {
-                    0% { transform: translateX(calc(-100% / 2)); }
-                    100% { transform: translateX(0); }
-                }
-                
-                .track-content.scroll-left {
-                    animation: scroll-left linear infinite;
-                }
-                
-                .track-content.scroll-right {
-                    animation: scroll-right linear infinite;
-                }
-            `;
-            document.head.appendChild(style);
-        }
     }
 
     renderTracks() {
-        this.tracks.forEach((track, index) => {
-            const trackEl = document.getElementById(track.id);
-            if (!trackEl) return;
+        document.querySelectorAll('.track-content').forEach(track => {
+            track.innerHTML = '';
+            const items = [...this.events, ...this.events, ...this.events];
 
-            const trackContent = trackEl.querySelector('.track-content');
-            trackContent.innerHTML = '';
+            items.forEach(event => {
+                const item = document.createElement('div');
+                item.className = 'carousel-item';
 
-            const itemsToShow = [...this.events, ...this.events, ...this.events];
+                item.innerHTML = `
+                    <img src="${event.image}"
+                         class="carousel-img pos-${event.position}"
+                         loading="lazy"
+                         alt="">
+                `;
 
-            itemsToShow.forEach((event, idx) => {
-                const item = this.createCarouselItem(event, idx);
-                trackContent.appendChild(item);
+                track.appendChild(item);
             });
-
-            const animationClass = track.direction === 'left' ? 'scroll-left' : 'scroll-right';
-            trackContent.classList.add(animationClass);
-            trackContent.style.animationDuration = `${track.speed}s`;
         });
     }
 
-    createCarouselItem(event, index) {
-        const positionClass = event.position ? `pos-${event.position}` : 'pos-center';
-        const item = document.createElement('div');
-        item.className = 'carousel-item';
-        item.setAttribute('role', 'listitem');
-        item.setAttribute('tabindex', '0');
-        item.setAttribute('aria-label', `${event.title} - ${event.subtitle}`);
+    applyAnimations() {
+        const top = document.querySelector('#top-track .track-content');
+        const bottom = document.querySelector('#bottom-track .track-content');
 
-        item.innerHTML = `
-            <img src="${event.image}" 
-                 alt="${Utils.escapeHTML(event.title)}"
-                 loading="lazy"
-                 class="carousel-img ${positionClass}"
-                 width="300"
-                 height="180"
-                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop&auto=format'">
-            <div class="item-overlay">
-                <h3>${Utils.escapeHTML(event.title)}</h3>
-                <p>${Utils.escapeHTML(event.subtitle)}</p>
-            </div>
-        `;
+        if (!top || !bottom) return;
 
-        return item;
+        let mode = 'desktop';
+        if (window.innerWidth <= 599) mode = 'mobile';
+        else if (window.innerWidth <= 991) mode = 'tablet';
+
+        top.style.animation = `scroll-left ${this.speeds[mode].top}s linear infinite`;
+        bottom.style.animation = `scroll-right ${this.speeds[mode].bottom}s linear infinite`;
     }
 
     bindEvents() {
-        this.tracks.forEach(track => {
-            const trackEl = document.getElementById(track.id);
-            if (!trackEl) return;
-
-            trackEl.addEventListener('mouseenter', () => this.pauseTrack(track.id));
-            trackEl.addEventListener('mouseleave', () => this.resumeTrack(track.id));
-            trackEl.addEventListener('focusin', () => this.pauseTrack(track.id));
-            trackEl.addEventListener('focusout', () => this.resumeTrack(track.id));
-        });
-
-        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        motionQuery.addEventListener('change', () => {
-            this.handleReducedMotion(motionQuery.matches);
-        });
-
         window.addEventListener('resize', Utils.debounce(() => {
-            this.handleResize();
-        }, 250));
-    }
-
-    startAnimation() {
-        this.tracks.forEach(track => {
-            const trackEl = document.getElementById(track.id);
-            if (!trackEl) return;
-
-            const content = trackEl.querySelector('.track-content');
-            if (content && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                content.style.animationPlayState = 'running';
-            }
-        });
-    }
-
-    pauseTrack(trackId) {
-        const trackEl = document.getElementById(trackId);
-        if (!trackEl) return;
-
-        const content = trackEl.querySelector('.track-content');
-        if (content) {
-            content.style.animationPlayState = 'paused';
-        }
-    }
-
-    resumeTrack(trackId) {
-        if (this.isPaused) return;
-
-        const trackEl = document.getElementById(trackId);
-        if (!trackEl) return;
-
-        const content = trackEl.querySelector('.track-content');
-        if (content && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            content.style.animationPlayState = 'running';
-        }
-    }
-
-    pauseAllTracks() {
-        this.isPaused = true;
-        this.tracks.forEach(track => {
-            this.pauseTrack(track.id);
-        });
-    }
-
-    resumeAllTracks() {
-        this.isPaused = false;
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            this.tracks.forEach(track => {
-                this.resumeTrack(track.id);
-            });
-        }
-    }
-
-    handleReducedMotion(reduced) {
-        this.tracks.forEach(track => {
-            const trackEl = document.getElementById(track.id);
-            if (!trackEl) return;
-
-            const content = trackEl.querySelector('.track-content');
-            if (content) {
-                content.style.animationPlayState = reduced ? 'paused' : 'running';
-            }
-        });
-    }
-
-    handleResize() {
-        this.tracks.forEach(track => {
-            const trackEl = document.getElementById(track.id);
-            if (!trackEl) return;
-
-            const content = trackEl.querySelector('.track-content');
-            if (content) {
-                content.style.animation = 'none';
-                setTimeout(() => {
-                    const animationClass = track.direction === 'left' ? 'scroll-left' : 'scroll-right';
-                    content.classList.add(animationClass);
-                    content.style.animationDuration = `${track.speed}s`;
-                    content.style.animationPlayState = this.isPaused ? 'paused' : 'running';
-                }, 10);
-            }
-        });
+            this.applyAnimations();
+        }, 300));
     }
 }
 

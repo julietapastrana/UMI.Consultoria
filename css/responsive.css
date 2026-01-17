@@ -314,18 +314,18 @@
     .header.scrolled .logo img {
         height: 42px;
     }
-    
+
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
     }
-    
+
     .header .logo {
         flex: 1;
     }
-    
+
     .menu-toggle {
         flex-shrink: 0;
     }
@@ -354,7 +354,7 @@
         height: 44px;
         padding: 10px;
     }
-    
+
     .menu-toggle i {
         font-size: 1.3rem;
     }
@@ -1153,179 +1153,6 @@
 
     .subtitulo-descripcion {
         font-size: 1rem;
-    }
-}
-
-@media (max-width: 1399px) {
-    .carousel-section {
-        max-width: 1300px;
-        margin: 4rem auto;
-    }
-
-    .carousel-item {
-        width: 280px;
-        height: 180px;
-    }
-}
-
-@media (max-width: 1199px) {
-    .carousel-section {
-        max-width: 95%;
-        padding: 3.5rem 0;
-    }
-
-    #trayecto-title {
-        font-size: 2.2rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .carousel-item {
-        width: 260px;
-        height: 170px;
-    }
-
-    .item-overlay h3 {
-        font-size: 1.3rem;
-    }
-}
-
-@media (max-width: 991px) {
-    .carousel-section {
-        padding: 3rem 0;
-        margin: 3rem auto;
-    }
-
-    #trayecto-title {
-        font-size: 2rem;
-        margin-bottom: 2.2rem;
-    }
-
-    .carousel-container {
-        padding: 0 1.5rem 2rem;
-    }
-
-    .carousel-item {
-        width: 240px;
-        height: 160px;
-    }
-
-    .item-overlay {
-        padding: 1.5rem;
-    }
-
-    .item-overlay h3 {
-        font-size: 1.2rem;
-    }
-
-    .item-overlay p {
-        font-size: 0.95rem;
-    }
-
-    .track {
-        height: 180px;
-    }
-}
-
-@media (max-width: 767px) {
-    .carousel-section {
-        padding: 2.5rem 0;
-        margin: 2.5rem auto;
-    }
-
-    #trayecto-title {
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
-    }
-
-    .carousel-container {
-        padding: 0 1rem 1.8rem;
-    }
-
-    .carousel-container::before,
-    .carousel-container::after {
-        width: 60px;
-    }
-
-    .carousel-item {
-        width: 220px;
-        height: 150px;
-    }
-
-    .item-overlay h3 {
-        font-size: 1.15rem;
-    }
-
-    .item-overlay p {
-        font-size: 0.9rem;
-    }
-
-    .track {
-        height: 170px;
-    }
-
-    #top-track .track-content {
-        animation-duration: 100s;
-    }
-
-    #bottom-track .track-content {
-        animation-duration: 120s;
-    }
-}
-
-@media (max-width: 599px) {
-    .carousel-section {
-        padding: 2rem 0;
-    }
-
-    #trayecto-title {
-        font-size: 1.7rem;
-        margin-bottom: 1.8rem;
-    }
-
-    .carousel-container {
-        padding: 0 0.8rem 1.5rem;
-    }
-
-    .carousel-container::before,
-    .carousel-container::after {
-        width: 50px;
-    }
-
-    .carousel-item {
-        width: 200px;
-        height: 140px;
-    }
-
-    .item-overlay {
-        padding: 1.2rem;
-    }
-
-    .item-overlay h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .track {
-        height: 160px;
-    }
-}
-
-@media (max-width: 479px) {
-    .carousel-section {
-        padding: 1.8rem 0;
-    }
-
-    #trayecto-title {
-        font-size: 1.6rem;
-    }
-
-    .carousel-item {
-        width: 180px;
-        height: 130px;
-    }
-
-    .track {
-        height: 150px;
     }
 }
 

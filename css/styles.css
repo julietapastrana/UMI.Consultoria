@@ -783,6 +783,7 @@
     max-width: 100%;
 }
 
+/* CARRUSEL - SECCIÓN CRÍTICA PARA MÓVIL */
 .carousel-section {
     padding: 60px 0;
     overflow: hidden;
@@ -828,27 +829,6 @@
     margin: 0.35rem auto 0 auto;
     opacity: 0.75;
     background: url("data:image/svg+xml,%3Csvg width='160' height='16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 8 Q40 0 80 8 T160 8' stroke='%23c5d63e' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;
-}
-
-.carousel-container::before,
-.carousel-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100px;
-    z-index: 3;
-    pointer-events: none;
-}
-
-.carousel-container::before {
-    left: 0;
-    background: linear-gradient(to right, var(--gris-claro) 0%, rgba(247, 247, 247, 0) 100%);
-}
-
-.carousel-container::after {
-    right: 0;
-    background: linear-gradient(to left, var(--gris-claro) 0%, rgba(247, 247, 247, 0) 100%);
 }
 
 .tracks-container {
@@ -958,19 +938,20 @@
     transform: translateY(0);
 }
 
-@keyframes scroll-top {
+/* Animaciones para desktop */
+@keyframes scroll-left {
     0% {
         transform: translateX(0);
     }
 
     100% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-100% / 2));
     }
 }
 
-@keyframes scroll-bottom {
+@keyframes scroll-right {
     0% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-100% / 2));
     }
 
     100% {
@@ -978,16 +959,163 @@
     }
 }
 
-#top-track .track-content {
-    animation: scroll-top 120s linear infinite;
+/* Desktop - aplicar animaciones */
+@media (min-width: 768px) {
+    #top-track .track-content {
+        animation: scroll-left 120s linear infinite;
+    }
+
+    #bottom-track .track-content {
+        animation: scroll-right 140s linear infinite;
+    }
+
+    .track:hover .track-content {
+        animation-play-state: paused;
+    }
 }
 
-#bottom-track .track-content {
-    animation: scroll-bottom 140s linear infinite;
+/* Móvil - aplicar animaciones más lentas */
+@media (max-width: 767px) {
+    .carousel-section {
+        padding: 40px 0 20px;
+        margin: 20px 0;
+    }
+
+    .carousel-container {
+        padding: 0 10px 20px;
+    }
+
+    .carousel-container h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .track {
+        height: 160px;
+        margin: 0 -10px;
+        width: calc(100% + 20px);
+    }
+
+    .carousel-item {
+        width: 240px;
+        height: 150px;
+    }
+
+    /* Animaciones para móvil */
+    #top-track .track-content {
+        animation: scroll-left 180s linear infinite;
+    }
+
+    #bottom-track .track-content {
+        animation: scroll-right 200s linear infinite;
+    }
+
+    /* Permitir pausar al tocar */
+    .track:active .track-content {
+        animation-play-state: paused;
+    }
+
+    .item-overlay {
+        padding: 12px;
+    }
+
+    .item-overlay h3 {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+    }
+
+    .item-overlay p {
+        font-size: 0.85rem;
+    }
 }
 
-.track:hover .track-content {
-    animation-play-state: paused;
+/* Para tablets */
+@media (min-width: 600px) and (max-width: 767px) {
+    .carousel-item {
+        width: 260px;
+        height: 160px;
+    }
+
+    #top-track .track-content {
+        animation: scroll-left 150s linear infinite;
+    }
+
+    #bottom-track .track-content {
+        animation: scroll-right 170s linear infinite;
+    }
+}
+
+@media (max-width: 479px) {
+    .carousel-section {
+        padding: 30px 0 15px;
+    }
+
+    .track {
+        height: 140px;
+    }
+
+    .carousel-item {
+        width: 220px;
+        height: 130px;
+    }
+
+    .carousel-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+    }
+
+    #top-track .track-content {
+        animation: scroll-left 200s linear infinite;
+    }
+
+    #bottom-track .track-content {
+        animation: scroll-right 220s linear infinite;
+    }
+}
+
+/* Clases para posicionamiento de imágenes */
+.carousel-img.pos-top {
+    object-position: top !important;
+}
+
+.carousel-img.pos-center {
+    object-position: center !important;
+}
+
+.carousel-img.pos-bottom {
+    object-position: bottom !important;
+}
+
+.carousel-img.pos-10 {
+    object-position: 50% 10% !important;
+}
+
+.carousel-img.pos-20 {
+    object-position: 50% 20% !important;
+}
+
+.carousel-img.pos-30 {
+    object-position: 50% 30% !important;
+}
+
+.carousel-img.pos-40 {
+    object-position: 50% 40% !important;
+}
+
+.carousel-img.pos-60 {
+    object-position: 50% 60% !important;
+}
+
+.carousel-img.pos-70 {
+    object-position: 50% 70% !important;
+}
+
+.carousel-img.pos-80 {
+    object-position: 50% 80% !important;
+}
+
+.carousel-img.pos-90 {
+    object-position: 50% 90% !important;
 }
 
 .about {
@@ -1612,66 +1740,25 @@
     border-color: rgba(197, 214, 62, 0.15);
 }
 
-.carousel-img.pos-top {
-    object-position: top !important;
-}
-
-.carousel-img.pos-center {
-    object-position: center !important;
-}
-
-.carousel-img.pos-bottom {
-    object-position: bottom !important;
-}
-
-.carousel-img.pos-10 {
-    object-position: 50% 10% !important;
-}
-
-.carousel-img.pos-20 {
-    object-position: 50% 20% !important;
-}
-
-.carousel-img.pos-30 {
-    object-position: 50% 30% !important;
-}
-
-.carousel-img.pos-40 {
-    object-position: 50% 40% !important;
-}
-
-.carousel-img.pos-60 {
-    object-position: 50% 60% !important;
-}
-
-.carousel-img.pos-70 {
-    object-position: 50% 70% !important;
-}
-
-.carousel-img.pos-80 {
-    object-position: 50% 80% !important;
-}
-
-.carousel-img.pos-90 {
-    object-position: 50% 90% !important;
-}
-
-@keyframes scroll-left {
-    0% {
-        transform: translateX(0);
+/* Reparaciones específicas para carrusel en móvil */
+@media (max-width: 767px) {
+    .track-content {
+        animation-play-state: running !important;
     }
 
-    100% {
-        transform: translateX(calc(-100% / 2));
+    /* Asegurar que las animaciones funcionen en móvil */
+    @media (prefers-reduced-motion: no-preference) {
+
+        #top-track .track-content,
+        #bottom-track .track-content {
+            animation-duration: 180s !important;
+        }
     }
 }
 
-@keyframes scroll-right {
-    0% {
-        transform: translateX(calc(-100% / 2));
-    }
-
-    100% {
-        transform: translateX(0);
+/* Corrección para animaciones con preferencia de reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+    .track-content {
+        animation: none !important;
     }
 }
