@@ -1,7 +1,9 @@
-// ===== VARIABLES GLOBALES =====
-const SCROLL_OFFSET = 100;
+const CONFIG = {
+    SCROLL_OFFSET: 100,
+    ANIMATION_DURATION: 800,
+    MOBILE_BREAKPOINT: 1199
+};
 
-// ===== DATOS DEL ACORDEÓN =====
 const acordeonData = [
     {
         id: 1,
@@ -82,7 +84,70 @@ const acordeonData = [
     },
 ];
 
-// ===== MANEJADOR DE ACORDEONES Y SCROLL UNIFICADO =====
+class Utils {
+    static debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    static throttle(func, limit) {
+        let inThrottle;
+        return function () {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    }
+
+    static escapeHTML(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    static isMobile() {
+        return window.innerWidth <= CONFIG.MOBILE_BREAKPOINT;
+    }
+
+    static smoothScrollTo(targetElement, offset = CONFIG.SCROLL_OFFSET) {
+        if (!targetElement) return;
+
+        const targetPosition = targetElement.offsetTop - offset;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        const duration = CONFIG.ANIMATION_DURATION;
+        let start = null;
+
+        function animation(currentTime) {
+            if (start === null) start = currentTime;
+            const timeElapsed = currentTime - start;
+            const run = Utils.ease(timeElapsed, startPosition, distance, duration);
+            window.scrollTo(0, run);
+            if (timeElapsed < duration) requestAnimationFrame(animation);
+        }
+
+        requestAnimationFrame(animation);
+    }
+
+    static ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+}
+
 class AcordeonScrollManager {
     constructor() {
         this.acordeonItems = [];
@@ -92,9 +157,12 @@ class AcordeonScrollManager {
         this.sections = document.querySelectorAll("section[id]");
         this.navLinks = document.querySelectorAll(".menu a, .mobile-menu a");
         this.menuToggle = document.getElementById('menu-toggle');
+        this.closeMenuBtn = document.getElementById('close-menu');
         this.mobileOverlay = document.getElementById('mobile-overlay');
         this.mobileMenu = document.getElementById('mobile-menu');
-        
+
+        this.isMobileMenuOpen = false;
+
         this.init();
     }
 
@@ -102,14 +170,14 @@ class AcordeonScrollManager {
         if (!this.container) return;
 
         this.renderAcordeon();
-        
         this.setupEventListeners();
-        
         this.handleInitialHash();
+        this.setupResizeHandler();
     }
 
     renderAcordeon() {
         this.container.innerHTML = '';
+        this.acordeonItems = [];
 
         acordeonData.forEach(itemData => {
             const acordeonItem = this.createAcordeonItem(itemData);
@@ -123,9 +191,14 @@ class AcordeonScrollManager {
         item.className = `acordeon-item ${itemData.isOpen ? 'active' : ''}`;
         item.dataset.id = itemData.id;
         item.id = itemData.slug;
+        item.setAttribute('role', 'region');
+        item.setAttribute('aria-labelledby', `acordeon-header-${itemData.id}`);
 
-        const header = document.createElement('div');
+        const header = document.createElement('button');
         header.className = 'acordeon-header';
+        header.id = `acordeon-header-${itemData.id}`;
+        header.setAttribute('aria-expanded', itemData.isOpen);
+        header.setAttribute('aria-controls', `acordeon-content-${itemData.id}`);
         header.innerHTML = `
             <div class="header-left">
                 <div class="header-text">
@@ -133,7 +206,7 @@ class AcordeonScrollManager {
                 </div>
             </div>
             <div class="header-right">
-                <span class="toggle-icon">
+                <span class="toggle-icon" aria-hidden="true">
                     <i class="fas ${itemData.isOpen ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>
                 </span>
             </div>
@@ -141,7 +214,11 @@ class AcordeonScrollManager {
 
         const content = document.createElement('div');
         content.className = 'acordeon-content';
+        content.id = `acordeon-content-${itemData.id}`;
+        content.setAttribute('role', 'region');
+        content.setAttribute('aria-labelledby', `acordeon-header-${itemData.id}`);
         content.style.maxHeight = itemData.isOpen ? '1000px' : '0px';
+        content.setAttribute('aria-hidden', !itemData.isOpen);
 
         const contentWrapper = document.createElement('div');
         contentWrapper.className = 'content-wrapper';
@@ -247,8 +324,9 @@ class AcordeonScrollManager {
             <a href="https://wa.me/5491121936762?text=${itemData.whatsappMessage}" 
                target="_blank" 
                rel="noopener noreferrer"
-               class="whatsapp-category-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 448 512">
+               class="whatsapp-category-button"
+               aria-label="${itemData.buttonText} por WhatsApp">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 448 512" aria-hidden="true">
                     <path d="M380.9 97.1C339 55.2 283.1 32 224 32 100.3 32 0 132.3 0 256c0 45.2 12 89.4 34.8 128.1L0 480l98.5-34.3C136.6 468 179.9 480 224 480c123.7 0 224-100.3 224-224 0-59.1-23.2-115-67.1-158.9zM224 433.9c-38.7 0-76.6-10.4-109.7-30.1l-7.8-4.6-58.5 20.4 20.4-58.5-4.6-7.8C62.5 320.6 52.1 282.7 52.1 244 52.1 142 122 72.1 224 72.1c54.3 0 105.3 21.1 143.7 59.4S440 189.7 440 244c0 102-69.9 189.9-216 189.9zm100.7-138.5l-34.7-17.4c-4.7-2.3-10.1-1.5-13.8 2l-14.4 14.7c-34.8-17.8-62.7-45.7-80.5-80.5l14.7-14.4c3.5-3.7 4.3-9.1 2-13.8l-17.4-34.7c-3.4-6.7-11.6-9.3-18-5.9l-25.1 12.6c-6.6 3.3-10.7 10.1-10.7 17.3 0 91.7 74.3 166 166 166 7.2 0 14-4.1 17.3-10.7l12.6-25.1c3.4-6.4.8-14.6-5.9-18z"/>
                 </svg>
                 ${itemData.buttonText}
@@ -265,6 +343,16 @@ class AcordeonScrollManager {
                 this.toggleAcordeon(header);
                 e.preventDefault();
                 e.stopPropagation();
+            }
+        });
+
+        this.container.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const header = e.target.closest('.acordeon-header');
+                if (header) {
+                    e.preventDefault();
+                    this.toggleAcordeon(header);
+                }
             }
         });
 
@@ -285,27 +373,58 @@ class AcordeonScrollManager {
             const target = document.querySelector(targetId);
             if (target) {
                 e.preventDefault();
-                this.smoothScrollTo(target);
+                Utils.smoothScrollTo(target);
                 this.updateActiveNavLink(targetId);
                 this.closeMobileMenu();
             }
         });
 
-        if (this.menuToggle && this.mobileMenu) {
+        if (this.menuToggle) {
             this.menuToggle.addEventListener('click', () => this.toggleMobileMenu());
-            this.mobileOverlay.addEventListener('click', () => this.closeMobileMenu());
-            
-            const mobileLinks = document.querySelectorAll('.mobile-menu a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', () => this.closeMobileMenu());
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') this.closeMobileMenu();
+            this.menuToggle.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.toggleMobileMenu();
+                }
             });
         }
 
-        window.addEventListener('scroll', () => this.onScroll());
+        if (this.closeMenuBtn) {
+            this.closeMenuBtn.addEventListener('click', () => this.closeMobileMenu());
+        }
+
+        if (this.mobileOverlay) {
+            this.mobileOverlay.addEventListener('click', () => this.closeMobileMenu());
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isMobileMenuOpen) {
+                this.closeMobileMenu();
+            }
+        });
+
+        window.addEventListener('scroll', Utils.throttle(() => this.onScroll(), 100));
+    }
+
+    setupResizeHandler() {
+        window.addEventListener('resize', Utils.debounce(() => {
+            this.handleResize();
+        }, 250));
+    }
+
+    handleResize() {
+        this.acordeonItems.forEach(item => {
+            if (item.classList.contains('active')) {
+                const content = item.querySelector('.acordeon-content');
+                if (content) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            }
+        });
+
+        if (!Utils.isMobile() && this.isMobileMenuOpen) {
+            this.closeMobileMenu();
+        }
     }
 
     openAcordeonAndScroll(targetId) {
@@ -316,19 +435,18 @@ class AcordeonScrollManager {
 
         setTimeout(() => {
             this.openAcordeon(targetAcordeon);
-            
+
             const acordeonPosition = this.acordeonSection.getBoundingClientRect().top + window.pageYOffset;
             const headerHeight = this.header ? this.header.offsetHeight : 80;
             const targetPosition = acordeonPosition - headerHeight - 20;
-            
+
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
             });
-            
+
             history.pushState(null, null, targetId);
-            
-            this.updateActiveNavLink('#services');
+            this.updateActiveNavLink('#service');
         }, 100);
     }
 
@@ -336,63 +454,30 @@ class AcordeonScrollManager {
         setTimeout(() => {
             if (window.location.hash) {
                 const hash = window.location.hash;
-                
+
                 if (hash.startsWith('#services')) {
                     const acordeonElement = document.querySelector(hash);
                     if (acordeonElement && acordeonElement.classList.contains('acordeon-item')) {
                         this.closeAllAcordeons();
-                        
                         setTimeout(() => {
                             this.openAcordeon(acordeonElement);
-                            
                             setTimeout(() => {
                                 const acordeonPosition = this.acordeonSection.getBoundingClientRect().top + window.pageYOffset;
                                 const headerHeight = this.header ? this.header.offsetHeight : 80;
                                 const targetPosition = acordeonPosition - headerHeight - 20;
-                                
-                                window.scrollTo({
-                                    top: targetPosition,
-                                    behavior: 'smooth'
-                                });
+                                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                             }, 300);
                         }, 100);
                     }
                 } else {
                     const target = document.querySelector(hash);
                     if (target) {
-                        this.smoothScrollTo(target);
+                        Utils.smoothScrollTo(target);
                         this.updateActiveNavLink(hash);
                     }
                 }
             }
         }, 500);
-    }
-
-    smoothScrollTo(targetElement, offset = SCROLL_OFFSET) {
-        if (!targetElement) return;
-        
-        const targetPosition = targetElement.offsetTop - offset;
-        const startPosition = window.pageYOffset;
-        const distance = targetPosition - startPosition;
-        const duration = 800;
-        let start = null;
-
-        function animation(currentTime) {
-            if (start === null) start = currentTime;
-            const timeElapsed = currentTime - start;
-            const run = ease(timeElapsed, startPosition, distance, duration);
-            window.scrollTo(0, run);
-            if (timeElapsed < duration) requestAnimationFrame(animation);
-        }
-
-        function ease(t, b, c, d) {
-            t /= d / 2;
-            if (t < 1) return c / 2 * t * t + b;
-            t--;
-            return -c / 2 * (t * (t - 2) - 1) + b;
-        }
-
-        requestAnimationFrame(animation);
     }
 
     toggleAcordeon(header) {
@@ -413,13 +498,19 @@ class AcordeonScrollManager {
         item.classList.add('active');
         const content = item.querySelector('.acordeon-content');
         const icon = item.querySelector('.toggle-icon i');
+        const header = item.querySelector('.acordeon-header');
 
         if (content) {
             content.style.maxHeight = content.scrollHeight + 'px';
+            content.setAttribute('aria-hidden', 'false');
         }
 
         if (icon) {
             icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+        }
+
+        if (header) {
+            header.setAttribute('aria-expanded', 'true');
         }
     }
 
@@ -427,13 +518,19 @@ class AcordeonScrollManager {
         item.classList.remove('active');
         const content = item.querySelector('.acordeon-content');
         const icon = item.querySelector('.toggle-icon i');
+        const header = item.querySelector('.acordeon-header');
 
         if (content) {
             content.style.maxHeight = '0';
+            content.setAttribute('aria-hidden', 'true');
         }
 
         if (icon) {
             icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        }
+
+        if (header) {
+            header.setAttribute('aria-expanded', 'false');
         }
     }
 
@@ -467,11 +564,17 @@ class AcordeonScrollManager {
             const linkHref = link.getAttribute("href");
             const isActive = targetId ? linkHref === targetId : false;
             link.classList.toggle("active", isActive);
+
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
         });
     }
 
     toggleMobileMenu() {
-        if (this.mobileMenu.classList.contains('active')) {
+        if (this.isMobileMenuOpen) {
             this.closeMobileMenu();
         } else {
             this.openMobileMenu();
@@ -481,99 +584,130 @@ class AcordeonScrollManager {
     openMobileMenu() {
         this.mobileOverlay.classList.add('active');
         this.mobileMenu.classList.add('active');
+        document.body.classList.add('mobile-menu-open');
         document.body.style.overflow = 'hidden';
-        this.menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+        this.menuToggle.setAttribute('aria-expanded', 'true');
+        this.menuToggle.innerHTML = '<span class="sr-only">Cerrar menú</span><i class="fas fa-times" aria-hidden="true"></i>';
+        this.isMobileMenuOpen = true;
+
+        setTimeout(() => {
+            const firstMenuItem = this.mobileMenu.querySelector('.mobile-menu-item');
+            if (firstMenuItem) firstMenuItem.focus();
+        }, 100);
     }
 
     closeMobileMenu() {
         this.mobileOverlay.classList.remove('active');
         this.mobileMenu.classList.remove('active');
+        document.body.classList.remove('mobile-menu-open');
         document.body.style.overflow = '';
-        this.menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        this.menuToggle.setAttribute('aria-expanded', 'false');
+        this.menuToggle.innerHTML = '<span class="sr-only">Menú</span><i class="fas fa-bars" aria-hidden="true"></i>';
+        this.isMobileMenuOpen = false;
+
+        this.menuToggle.focus();
     }
 }
 
-// ===== CARRUSEL =====
 class InfiniteCarousel {
     constructor() {
         this.events = [
             {
-                image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop",
-                title: "Workshop Innovación",
-                subtitle: "Metodologías ágiles"
+                image: "img/trayecto/IMG_0294.jpg",
+                title: " ",
+                subtitle: " ",
+                position: "center"
             },
             {
-                image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop",
-                title: "Networking Digital",
-                subtitle: "Conexiones profesionales"
+                image: "img/trayecto/IMG_0410.jpg",
+                title: " ",
+                subtitle: " ",
+                position: "top"
             },
             {
-                image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&h=300&fit=crop",
-                title: "Capacitación IT",
-                subtitle: "Tecnologías emergentes"
+                image: "img/trayecto/IMG_0989.jpg",
+                title: " ",
+                subtitle: " ",
+                position: "center"
             },
             {
-                image: "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=400&h=300&fit=crop",
-                title: "Liderazgo",
-                subtitle: "Desarrollo directivo"
+                image: "img/trayecto/IMG_0991.jpg",
+                title: " ",
+                subtitle: " ",
+                position: "center"
             },
             {
-                image: "https://images.unsplash.com/photo-1487956382158-bb926046304a?w=400&h=300&fit=crop",
-                title: "Mindfulness",
-                subtitle: "Bienestar laboral"
+                image: "img/trayecto/IMG_2833.jpg",
+                title: " ",
+                subtitle: " ",
+                position: "top"
             },
             {
-                image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop",
-                title: "Mentorías",
-                subtitle: "Crecimiento personal"
-            },
-            {
-                image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop",
-                title: "Taller CV",
-                subtitle: "Oportunidades laborales"
-            },
-            {
-                image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop",
-                title: "Proyectos Colaborativos",
-                subtitle: "Trabajo en equipo"
-            },
-            {
-                image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&h=300&fit=crop",
-                title: "Charlas Inspiradoras",
-                subtitle: "Historias de éxito"
-            },
-            {
-                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
-                title: "Formación Continua",
-                subtitle: "Aprendizaje constante"
+                image: "img/trayecto/kari y gabi.jpg",
+                title: " ",
+                subtitle: " ",
+                position: "center"
             }
         ];
 
         this.tracks = [
-            { id: "top-track", speed: 120 },
-            { id: "bottom-track", speed: 140 }
+            { id: "top-track", speed: 140, direction: "left" },
+            { id: "bottom-track", speed: 160, direction: "right" }
         ];
 
         this.container = document.getElementById("carousel-container");
+        this.isPaused = false;
+        this.animationId = null;
         this.init();
     }
 
     init() {
         if (!this.container) return;
 
+        this.container.innerHTML = '';
+
         this.container.innerHTML = `
-            <h2>Nuestro Trayecto</h2>
-            <div class="tracks-container">
+            <h2 id="trayecto-title" class="text-center">Nuestro Trayecto</h2>
+            <div class="tracks-container" role="region" aria-labelledby="trayecto-title">
                 ${this.tracks.map(track => `
-                    <div class="track" id="${track.id}">
-                        <div class="track-content"></div>
+                    <div class="track" id="${track.id}" aria-label="Carrusel ${track.id === 'top-track' ? 'superior' : 'inferior'}">
+                        <div class="track-content" role="list"></div>
                     </div>
                 `).join('')}
             </div>
         `;
 
         this.renderTracks();
+        this.addAnimationStyles();
         this.bindEvents();
+        this.startAnimation();
+    }
+
+    addAnimationStyles() {
+        if (!document.getElementById('carousel-animations')) {
+            const style = document.createElement('style');
+            style.id = 'carousel-animations';
+            style.textContent = `
+                @keyframes scroll-left {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(calc(-100% / 2)); }
+                }
+                
+                @keyframes scroll-right {
+                    0% { transform: translateX(calc(-100% / 2)); }
+                    100% { transform: translateX(0); }
+                }
+                
+                .track-content.scroll-left {
+                    animation: scroll-left linear infinite;
+                }
+                
+                .track-content.scroll-right {
+                    animation: scroll-right linear infinite;
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
 
     renderTracks() {
@@ -582,34 +716,44 @@ class InfiniteCarousel {
             if (!trackEl) return;
 
             const trackContent = trackEl.querySelector('.track-content');
-            let itemsHTML = '';
+            trackContent.innerHTML = '';
 
-            for (let i = 0; i < 3; i++) {
-                this.events.forEach(event => {
-                    itemsHTML += this.createCarouselItem(event);
-                });
-            }
+            const itemsToShow = [...this.events, ...this.events, ...this.events];
 
-            trackContent.innerHTML = itemsHTML;
-            
-            const animationDuration = track.speed;
-            trackContent.style.animation = `scroll-${track.id.includes('top') ? 'top' : 'bottom'} ${animationDuration}s linear infinite`;
+            itemsToShow.forEach((event, idx) => {
+                const item = this.createCarouselItem(event, idx);
+                trackContent.appendChild(item);
+            });
+
+            const animationClass = track.direction === 'left' ? 'scroll-left' : 'scroll-right';
+            trackContent.classList.add(animationClass);
+            trackContent.style.animationDuration = `${track.speed}s`;
         });
     }
 
-    createCarouselItem(event) {
-        return `
-            <div class="carousel-item">
-                <img src="${event.image}" 
-                     alt="${event.title}"
-                     loading="lazy"
-                     onerror="this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop'">
-                <div class="item-overlay">
-                    <h3>${this.escapeHTML(event.title)}</h3>
-                    <p>${this.escapeHTML(event.subtitle)}</p>
-                </div>
+    createCarouselItem(event, index) {
+        const positionClass = event.position ? `pos-${event.position}` : 'pos-center';
+        const item = document.createElement('div');
+        item.className = 'carousel-item';
+        item.setAttribute('role', 'listitem');
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('aria-label', `${event.title} - ${event.subtitle}`);
+
+        item.innerHTML = `
+            <img src="${event.image}" 
+                 alt="${Utils.escapeHTML(event.title)}"
+                 loading="lazy"
+                 class="carousel-img ${positionClass}"
+                 width="300"
+                 height="180"
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&h=300&fit=crop&auto=format'">
+            <div class="item-overlay">
+                <h3>${Utils.escapeHTML(event.title)}</h3>
+                <p>${Utils.escapeHTML(event.subtitle)}</p>
             </div>
         `;
+
+        return item;
     }
 
     bindEvents() {
@@ -617,52 +761,120 @@ class InfiniteCarousel {
             const trackEl = document.getElementById(track.id);
             if (!trackEl) return;
 
-            trackEl.addEventListener('mouseenter', () => {
-                const content = trackEl.querySelector('.track-content');
-                content.style.animationPlayState = 'paused';
-            });
+            trackEl.addEventListener('mouseenter', () => this.pauseTrack(track.id));
+            trackEl.addEventListener('mouseleave', () => this.resumeTrack(track.id));
+            trackEl.addEventListener('focusin', () => this.pauseTrack(track.id));
+            trackEl.addEventListener('focusout', () => this.resumeTrack(track.id));
+        });
 
-            trackEl.addEventListener('mouseleave', () => {
-                const content = trackEl.querySelector('.track-content');
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        motionQuery.addEventListener('change', () => {
+            this.handleReducedMotion(motionQuery.matches);
+        });
+
+        window.addEventListener('resize', Utils.debounce(() => {
+            this.handleResize();
+        }, 250));
+    }
+
+    startAnimation() {
+        this.tracks.forEach(track => {
+            const trackEl = document.getElementById(track.id);
+            if (!trackEl) return;
+
+            const content = trackEl.querySelector('.track-content');
+            if (content && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 content.style.animationPlayState = 'running';
-            });
+            }
         });
     }
 
-    escapeHTML(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    pauseTrack(trackId) {
+        const trackEl = document.getElementById(trackId);
+        if (!trackEl) return;
+
+        const content = trackEl.querySelector('.track-content');
+        if (content) {
+            content.style.animationPlayState = 'paused';
+        }
+    }
+
+    resumeTrack(trackId) {
+        if (this.isPaused) return;
+
+        const trackEl = document.getElementById(trackId);
+        if (!trackEl) return;
+
+        const content = trackEl.querySelector('.track-content');
+        if (content && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            content.style.animationPlayState = 'running';
+        }
+    }
+
+    pauseAllTracks() {
+        this.isPaused = true;
+        this.tracks.forEach(track => {
+            this.pauseTrack(track.id);
+        });
+    }
+
+    resumeAllTracks() {
+        this.isPaused = false;
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            this.tracks.forEach(track => {
+                this.resumeTrack(track.id);
+            });
+        }
+    }
+
+    handleReducedMotion(reduced) {
+        this.tracks.forEach(track => {
+            const trackEl = document.getElementById(track.id);
+            if (!trackEl) return;
+
+            const content = trackEl.querySelector('.track-content');
+            if (content) {
+                content.style.animationPlayState = reduced ? 'paused' : 'running';
+            }
+        });
+    }
+
+    handleResize() {
+        this.tracks.forEach(track => {
+            const trackEl = document.getElementById(track.id);
+            if (!trackEl) return;
+
+            const content = trackEl.querySelector('.track-content');
+            if (content) {
+                content.style.animation = 'none';
+                setTimeout(() => {
+                    const animationClass = track.direction === 'left' ? 'scroll-left' : 'scroll-right';
+                    content.classList.add(animationClass);
+                    content.style.animationDuration = `${track.speed}s`;
+                    content.style.animationPlayState = this.isPaused ? 'paused' : 'running';
+                }, 10);
+            }
+        });
     }
 }
 
-// ===== INICIALIZACIÓN =====
 let acordeonScrollManager, carousel;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Inicializando UMI...');
+    try {
+        acordeonScrollManager = new AcordeonScrollManager();
 
-    acordeonScrollManager = new AcordeonScrollManager();
-
-    if (document.getElementById("carousel-container")) {
-        carousel = new InfiniteCarousel();
-    }
-
-    window.addEventListener('resize', () => {
-        if (acordeonScrollManager) {
-            acordeonScrollManager.acordeonItems.forEach(item => {
-                if (item.classList.contains('active')) {
-                    const content = item.querySelector('.acordeon-content');
-                    if (content) {
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                    }
-                }
-            });
+        if (document.getElementById("carousel-container")) {
+            carousel = new InfiniteCarousel();
         }
-    });
+
+        preloadCriticalImages();
+
+    } catch (error) {
+        console.error('Error durante la inicialización:', error);
+    }
 });
 
-// ===== FUNCIONES GLOBALES =====
 window.openAllAcordeons = () => {
     if (acordeonScrollManager) acordeonScrollManager.openAllAcordeons();
 };
@@ -674,8 +886,8 @@ window.closeAllAcordeons = () => {
 window.scrollToContact = () => {
     const contactSection = document.querySelector('#contact');
     if (contactSection) {
+        Utils.smoothScrollTo(contactSection);
         if (acordeonScrollManager) {
-            acordeonScrollManager.smoothScrollTo(contactSection);
             acordeonScrollManager.updateActiveNavLink('#contact');
         }
     }
@@ -688,3 +900,33 @@ window.openMobileMenu = () => {
 window.closeMobileMenu = () => {
     if (acordeonScrollManager) acordeonScrollManager.closeMobileMenu();
 };
+
+function preloadCriticalImages() {
+    const criticalImages = [
+        'img/umi_logo.jpg',
+        'img/fondo.jpg',
+        'img/ola-verde.png',
+        'img/trayecto/IMG_0294.jpg',
+        'img/trayecto/IMG_0410.jpg',
+        'img/trayecto/IMG_0989.jpg',
+        'img/trayecto/IMG_0991.jpg',
+        'img/trayecto/IMG_2833.jpg',
+        'img/trayecto/kari y gabi.jpg'
+    ];
+
+    criticalImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+        img.onerror = () => {
+            console.warn(`No se pudo cargar la imagen: ${src}`);
+        };
+    });
+}
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(error => {
+            console.log('Service Worker registration failed:', error);
+        });
+    });
+}

@@ -4,62 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="UMI Consultoría - Talento en Acción">
-    <title>UMI - Talento en Acción</title>
+    <meta name="description"
+        content="UMI Consultoría - Talento en Acción. Consultoría y desarrollo profesional con propósito. Servicios de gestión de proyectos, búsqueda de talento, orientación laboral y bienestar.">
+    <meta name="keywords"
+        content="consultoría, desarrollo profesional, gestión de proyectos, talento, recursos humanos, mindfulness, orientación laboral">
+    <title>UMI Consultoría - Talento en Acción</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
     <link rel="stylesheet" href="css/variable.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/responsive.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <!-- Fuente Ruda -->
     <link href="https://fonts.googleapis.com/css2?family=Ruda:wght@400;500;700;900&display=swap" rel="stylesheet">
+
     <link rel="icon" type="image/x-icon" href="img/logo.png">
+    <link rel="apple-touch-icon" href="img/logo.png">
+
+    <meta property="og:title" content="UMI Consultoría - Talento en Acción">
+    <meta property="og:description"
+        content="Consultoría y desarrollo profesional con propósito. Fluyendo hacia el éxito.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://umiconsultoria.com">
 </head>
 
 <body>
-    <header class="header">
+    <header class="header" role="banner">
         <div class="logo">
-            <img src="img/umi_logo.jpg" alt="Logo UMI">
+            <img src="img/umi_logo.jpg" alt="Logo UMI Consultoría" width="120" height="58">
         </div>
 
-        <!-- Botón menú hamburguesa -->
-        <button class="menu-toggle" id="menu-toggle" aria-label="Alternar menú">
-            <i class="fas fa-bars"></i>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Menú principal" aria-expanded="false"
+            aria-controls="mobile-menu">
+            <span class="sr-only">Menú</span>
+            <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
 
-        <!-- Menú desktop -->
-        <nav class="nav hidden-mobile">
-            <ul class="menu">
-                <li><a href="#service">Servicios</a></li>
-                <li><a href="#trayecto">Nuestro Trayecto</a></li>
-                <li><a href="#about" class="active">Nosotros</a></li>
-                <li><a href="#contact">Contacto</a></li>
+        <nav class="nav hidden-mobile" aria-label="Navegación principal">
+            <ul class="menu" role="menubar">
+                <li role="none"><a href="#service" role="menuitem">Servicios</a></li>
+                <li role="none"><a href="#trayecto" role="menuitem">Nuestro Trayecto</a></li>
+                <li role="none"><a href="#about" class="active" role="menuitem">Nosotros</a></li>
+                <li role="none"><a href="#contact" role="menuitem">Contacto</a></li>
             </ul>
         </nav>
 
-        <!-- Menú móvil overlay -->
-        <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+        <div class="mobile-menu-overlay" id="mobile-overlay" tabindex="-1" aria-hidden="true"></div>
 
-        <!-- Menú móvil contenido -->
-        <div class="mobile-menu-container" id="mobile-menu">
-            <nav class="mobile-menu">
-                <a href="#services" class="mobile-menu-item">
-                    <i class="fas fa-briefcase"></i>
+        <div class="mobile-menu-container" id="mobile-menu" aria-label="Menú móvil" role="dialog" aria-modal="true">
+            <button class="close-menu" id="close-menu" aria-label="Cerrar menú">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <nav class="mobile-menu" aria-label="Navegación móvil">
+                <a href="#service" class="mobile-menu-item" role="menuitem">
+                    <i class="fas fa-briefcase" aria-hidden="true"></i>
                     <span>Servicios</span>
                 </a>
-                <a href="#trayecto" class="mobile-menu-item">
-                    <i class="fas fa-road"></i>
+                <a href="#trayecto" class="mobile-menu-item" role="menuitem">
+                    <i class="fas fa-road" aria-hidden="true"></i>
                     <span>Nuestro Trayecto</span>
                 </a>
-                <a href="#about" class="mobile-menu-item active">
-                    <i class="fas fa-users"></i>
+                <a href="#about" class="mobile-menu-item active" role="menuitem">
+                    <i class="fas fa-users" aria-hidden="true"></i>
                     <span>Nosotros</span>
                 </a>
-                <a href="#contact" class="mobile-menu-item">
-                    <i class="fas fa-envelope"></i>
+                <a href="#contact" class="mobile-menu-item" role="menuitem">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
                     <span>Contacto</span>
                 </a>
             </nav>
@@ -72,30 +91,33 @@
         </div>
     </header>
 
-    <main>
+    <main role="main">
         <!-- HERO SECTION -->
-        <section id="homepage" class="section hero">
+        <section id="homepage" class="section hero" aria-labelledby="hero-title">
             <div class="hero-content">
                 <div class="hero-title">
-                    <h1 class="talento-accion">Talento en Acción</h1>
+                    <h1 id="hero-title" class="talento-accion">Talento en Acción</h1>
                 </div>
                 <div class="hero-subtitle">
-                    <p>Consultoría y desarrollo profesional<br>con propósito.
-                    </p>
-                    <button onclick="scrollToContact()" class="cta-button">¡Escribinos para empezar!</button>
+                    <p>Consultoría y desarrollo profesional<br>con propósito.</p>
+                    <button onclick="scrollToContact()" class="cta-button" aria-label="Contactar a UMI Consultoría">
+                        ¡Escribinos para empezar!
+                    </button>
                 </div>
             </div>
         </section>
 
         <!-- SERVICIOS -->
-        <section id="service" class="services">
-            <h2>Nuestros Servicios</h2>
+        <section id="service" class="services" aria-labelledby="services-title">
+            <h2 id="services-title">Nuestros Servicios</h2>
             <p class="services-subtitle">¡Haz click en alguno de nuestro servicios y obten más información!</p>
 
-            <div class="services-grid">
-                <a href="#services1" class="service-card">
+            <div class="services-grid" role="list">
+                <a href="#services1" class="service-card" role="listitem"
+                    aria-label="Gestión de Proyectos - Ver detalles">
                     <div class="service-icon-wrapper">
-                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de proyectos">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de proyectos" width="88"
+                            height="88" loading="lazy">
                     </div>
                     <h3>Gestión de Proyectos</h3>
                     <div class="service-cta">
@@ -103,9 +125,11 @@
                     </div>
                 </a>
 
-                <a href="#services2" class="service-card">
+                <a href="#services2" class="service-card" role="listitem"
+                    aria-label="Búsqueda y Gestión de Talento - Ver detalles">
                     <div class="service-icon-wrapper">
-                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de talento">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de gestión de talento" width="88"
+                            height="88" loading="lazy">
                     </div>
                     <h3>Búsqueda y Gestión de Talento</h3>
                     <div class="service-cta">
@@ -113,9 +137,11 @@
                     </div>
                 </a>
 
-                <a href="#services3" class="service-card">
+                <a href="#services3" class="service-card" role="listitem"
+                    aria-label="Orientación laboral profesional - Ver detalles">
                     <div class="service-icon-wrapper">
-                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de orientación laboral">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de orientación laboral" width="88"
+                            height="88" loading="lazy">
                     </div>
                     <h3>Orientación laboral - profesional</h3>
                     <div class="service-cta">
@@ -123,9 +149,10 @@
                     </div>
                 </a>
 
-                <a href="#services4" class="service-card">
+                <a href="#services4" class="service-card" role="listitem" aria-label="Bienestar - Ver detalles">
                     <div class="service-icon-wrapper">
-                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de capacitación y bienestar">
+                        <img class="service-icon" src="img/ola-verde.png" alt="Icono de capacitación y bienestar"
+                            width="88" height="88" loading="lazy">
                     </div>
                     <h3>Bienestar</h3>
                     <div class="service-cta">
@@ -136,28 +163,28 @@
         </section>
 
         <!-- SECCIÓN ACORDEÓN -->
-        <section class="acordeon-section">
-            <div class="acordeon-container" id="acordeon-container">
-                <!-- Los acordeones se generan dinámicamente con JavaScript -->
+        <section class="acordeon-section" aria-label="Detalles de servicios">
+            <div class="acordeon-container" id="acordeon-container" role="region" aria-label="Acordeón de servicios">
+
             </div>
         </section>
 
         <!-- SECCIÓN CARRUSEL -->
-        <section class="carousel-section" id="trayecto">
+        <section class="carousel-section" id="trayecto" aria-labelledby="trayecto-title">
             <div class="carousel-container" id="carousel-container">
-                <!-- El carrusel se genera dinámicamente con JavaScript -->
+
             </div>
         </section>
 
         <!-- SOBRE NOSOTROS -->
-        <section id="about" class="about">
+        <section id="about" class="about" aria-labelledby="about-title">
             <div class="about-header-sticky">
-                <h2>Detrás de ...</h2>
+                <h2 id="about-title">Detrás de ...</h2>
                 <div class="about-description-center">
-                    <p class="canva-phrase">
+                    <blockquote class="canva-phrase">
                         "Con una visión centrada en la educación y la tecnología, acompañamos a las personas y empresas
                         a impactar positivamente en su desarrollo personal y profesional."
-                    </p>
+                    </blockquote>
                     <p class="cta-soft">
                         Estamos para acompañarte en tu próximo paso.
                     </p>
@@ -165,13 +192,14 @@
             </div>
 
             <div class="team-presentation-row">
-                <article class="team-member-card">
+                <article class="team-member-card" aria-labelledby="gabriela-name">
                     <div class="member-header">
                         <div class="img-wrapper">
-                            <img src="img/GabrielaMolignano.jpeg" alt="Gabriela Molignano">
+                            <img src="img/GabrielaMolignano.jpeg" alt="Gabriela Molignano - Psicopedagoga" width="130"
+                                height="130" loading="lazy">
                         </div>
                         <div class="member-title">
-                            <h3>Gabriela Molignano</h3>
+                            <h3 id="gabriela-name">Gabriela Molignano</h3>
                             <div class="bio-tags">
                                 <span>Psicopedagoga</span>
                                 <span>Gestión de Talento</span>
@@ -186,9 +214,9 @@
                             potenciar equipos.</p>
                     </div>
                     <a href="https://www.linkedin.com/in/gabriela-molignano/" target="_blank" rel="noopener noreferrer"
-                        class="linkedin-btn">
+                        class="linkedin-btn" aria-label="Conectar con Gabriela Molignano en LinkedIn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 448 512">
+                            viewBox="0 0 448 512" aria-hidden="true">
                             <path
                                 d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 501.5 14.3 516 31.9 516H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
                         </svg>
@@ -196,13 +224,14 @@
                     </a>
                 </article>
 
-                <article class="team-member-card">
+                <article class="team-member-card" aria-labelledby="karina-name">
                     <div class="member-header">
                         <div class="img-wrapper">
-                            <img src="img/KarinaRocha.jpg" alt="Karina Rocha">
+                            <img src="img/KarinaRocha.jpg" alt="Karina Rocha - Especialista en Mindfulness" width="130"
+                                height="130" loading="lazy">
                         </div>
                         <div class="member-title">
-                            <h3>Karina Rocha</h3>
+                            <h3 id="karina-name">Karina Rocha</h3>
                             <div class="bio-tags">
                                 <span>Mindfulness</span>
                                 <span>Desarrollo Personal</span>
@@ -217,9 +246,10 @@
                         <p>Creo firmemente que cuando el eje interno se alinea, los resultados externos fluyen.</p>
                     </div>
                     <a href="https://www.linkedin.com/in/karinarochaaltaperformancemdp/" target="_blank"
-                        rel="noopener noreferrer" class="linkedin-btn">
+                        rel="noopener noreferrer" class="linkedin-btn"
+                        aria-label="Conectar con Karina Rocha en LinkedIn">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 448 512">
+                            viewBox="0 0 448 512" aria-hidden="true">
                             <path
                                 d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 501.5 14.3 516 31.9 516H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
                         </svg>
@@ -230,21 +260,23 @@
         </section>
 
         <!-- CONTACTO -->
-        <section id="contact" class="contact">
-            <h2>Tu próximo paso comienza aquí</h2>
+        <section id="contact" class="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">Tu próximo paso comienza aquí</h2>
             <p class="contact-message">¿Listo para fluir hacia tu próximo nivel?</p>
             <div class="social-links">
-                <a href="https://wa.me/5491121936762" target="_blank" class="social-button whatsapp-btn">
+                <a href="https://wa.me/5491121936762" target="_blank" class="social-button whatsapp-btn"
+                    rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        viewBox="0 0 448 512">
+                        viewBox="0 0 448 512" aria-hidden="true">
                         <path
                             d="M380.9 97.1C339 55.2 283.1 32 224 32 100.3 32 0 132.3 0 256c0 45.2 12 89.4 34.8 128.1L0 480l98.5-34.3C136.6 468 179.9 480 224 480c123.7 0 224-100.3 224-224 0-59.1-23.2-115-67.1-158.9zM224 433.9c-38.7 0-76.6-10.4-109.7-30.1l-7.8-4.6-58.5 20.4 20.4-58.5-4.6-7.8C62.5 320.6 52.1 282.7 52.1 244 52.1 142 122 72.1 224 72.1c54.3 0 105.3 21.1 143.7 59.4S440 189.7 440 244c0 102-69.9 189.9-216 189.9zm100.7-138.5l-34.7-17.4c-4.7-2.3-10.1-1.5-13.8 2l-14.4 14.7c-34.8-17.8-62.7-45.7-80.5-80.5l14.7-14.4c3.5-3.7 4.3-9.1 2-13.8l-17.4-34.7c-3.4-6.7-11.6-9.3-18-5.9l-25.1 12.6c-6.6 3.3-10.7 10.1-10.7 17.3 0 91.7 74.3 166 166 166 7.2 0 14-4.1 17.3-10.7l12.6-25.1c3.4-6.4.8-14.6-5.9-18z" />
                     </svg>
                     Escribinos por WhatsApp
                 </a>
-                <a href="https://instagram.com/umi.consultoria" target="_blank" class="social-button instagram-btn">
+                <a href="https://instagram.com/umi.consultoria" target="_blank" class="social-button instagram-btn"
+                    rel="noopener noreferrer" aria-label="Seguir en Instagram">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        viewBox="0 0 448 512">
+                        viewBox="0 0 448 512" aria-hidden="true">
                         <path
                             d="M224.1 141c-63.6 0-115.1 51.5-115.1 115.1S160.5 371.2 224.1 371.2 339.2 319.7 339.2 256 287.7 141 224.1 141zm0 190.2c-41.6 0-75.1-33.6-75.1-75.1s33.5-75.1 75.1-75.1 75.1 33.6 75.1 75.1-33.5 75.1-75.1 75.1zm146.4-194.3c0 14.9-12 27-27 27s-27-12.1-27-27 12-27 27-27 27 12.1 27 27zm76.1 27.2c-.5-35.2-9.9-66.5-35.6-92.1s-56.9-35.1-92.1-35.6C293.8 32 256.3 32 224 32s-69.8 0-94.9.5c-35.2.5-66.5 9.9-92.1 35.6s-35.1 56.9-35.6 92.1c.5-25.1.5-62.6.5-94.9s0-69.8.5-94.9c.5-35.2 9.9-66.5 35.6-92.1s56.9-35.1 92.1-35.6c25.1-.5 62.6-.5 94.9-.5s69.8 0 94.9.5c35.2.5 66.5 9.9 92.1 35.6s35.1 56.9 35.6 92.1c.5 25.1.5 62.6.5 94.9s0-69.8-.5-94.9zm-48.6 228c-7.8 19.7-22.9 34.8-42.6 42.6-29.5 11.7-99.5 9-132.3 9s-102.7 2.6-132.3-9c-19.7-7.8-34.8-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.3s-2.6-102.7 9-132.3c7.8-19.7 22.9-34.8 42.6-42.6 29.5-11.7 99.5-9 132.3-9s102.7-2.6 132.3 9c19.7 7.8 34.8 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.3s2.7 102.8-9 132.3z" />
                     </svg>
@@ -257,20 +289,20 @@
             </p>
         </section>
 
-        <footer class="footer">
+        <footer class="footer" role="contentinfo">
             <div class="footer-container">
                 <div class="footer-logo">
-                    <img src="img/umi_logo.jpg" alt="UMI Consultoría">
+                    <img src="img/umi_logo.jpg" alt="UMI Consultoría" width="120" height="45" loading="lazy">
                 </div>
                 <div class="footer-text">
-                    © 2023 UMI Consultoría.
+                    © 2024 UMI Consultoría.
                     Fluyendo hacia el éxito.
                 </div>
             </div>
         </footer>
     </main>
 
-    <script src="js/index.js"></script>
+    <script src="js/index.js" defer></script>
 </body>
 
 </html>
