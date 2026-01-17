@@ -623,7 +623,7 @@ class InfiniteCarousel {
             { image: "img/trayecto/IMG_0410.jpg", title: "", subtitle: "", position: "top" },
             { image: "img/trayecto/IMG_0989.jpg", title: "", subtitle: "", position: "center" },
             { image: "img/trayecto/IMG_0991.jpg", title: "", subtitle: "", position: "center" },
-            { image: "img/trayecto/IMG_2833.jpg", title: "", subtitle: "", position: "center" },
+            { image: "img/trayecto/IMG_2833.jpg", title: "", subtitle: "", position: "top" },
             { image: "img/trayecto/kari y gabi.jpg", title: "", subtitle: "", position: "center" }
         ];
 
