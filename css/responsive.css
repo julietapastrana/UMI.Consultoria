@@ -1817,7 +1817,7 @@
 @media (-webkit-min-device-pixel-ratio: 2),
 (min-resolution: 192dpi) {
     .hero {
-        background-image: url("../img/fondo@2x.jpg");
+        background-image: url("../img/fondo.jpg");
         background-size: cover;
     }
 }
