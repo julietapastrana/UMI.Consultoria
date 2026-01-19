@@ -58,7 +58,7 @@ const acordeonData = [
                 icon: "🧘‍♂️"
             },
         ],
-        whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Bienestar",
+        whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Programa%20de%20bienestar",
         buttonText: "Quiero más información"
     },
     {
