@@ -12,14 +12,7 @@ const acordeonData = [
         title: "Gestión de proyectos",
         slug: "services1",
         isOpen: false,
-        items: [
-            {
-                description: "Planificación, ejecución y seguimiento de proyectos o programas, asegurando que se cumplan los objetivos propuestos por las organizaciones.",
-                modality: "Online o Presencial (Mar del Plata)",
-                dedication: "A definir según el programa",
-                icon: "📊",
-            }
-        ],
+        generalDescription: "Planificación, ejecución y seguimiento de proyectos o programas, asegurando que se cumplan los objetivos propuestos por las organizaciones.",
         whatsappMessage: "Hola%20UMI,%20me%20interesa%20obtener%20más%20información%20sobre%20Gestión%20de%20Proyectos",
         buttonText: "Quiero más información"
     },
@@ -43,7 +36,7 @@ const acordeonData = [
                 title: "¡Conectá con Oportunidades!",
                 description: "Diseño de CV/Portfolio y optimización de LinkedIn.",
                 dedication: "1 a 2 encuentros",
-                modality: "Online o Presencial (Mar del Plata)",
+                modality: "Online",
                 icon: "💼"
             }
         ],
@@ -52,7 +45,7 @@ const acordeonData = [
     },
     {
         id: 4,
-        title: "Bienestar",
+        title: "Programa de bienestar",
         slug: "services4",
         isOpen: false,
         generalDescription: "Sesiones de mindfulness, mentalización y respiración, administración del estrés y emociones. Planes formativos a medida.",
@@ -60,7 +53,7 @@ const acordeonData = [
             {
                 title: "Sesiones de Mindfulness, mentalización y respiración",
                 description: "Te ofrecerán beneficios para tu salud mental, emocional y física.",
-                dedication: "4 encuentros, frecuencia semanal",
+                dedication: "4 a 8 encuentros",
                 modality: "Online y Presencial (Mar del Plata)",
                 icon: "🧘‍♂️"
             },
